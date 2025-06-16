@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-[100vh] overflow-hidden cursor-pointer"
+      className="relative w-full h-screen overflow-hidden"
       onClick={() => {
         videoIndex < 3 ? setVideoIndex((p) => p + 1) : setVideoIndex(0);
         videoElRef.current?.load();

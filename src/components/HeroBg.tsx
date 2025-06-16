@@ -12,7 +12,7 @@ export default function HeroBg({ videoIndex, videoElRef }: heroBgProps) {
   return (
     <video
       id="videoBg"
-      className="absolute inset-0 block z-[-1] "
+      className="absolute inset-0 h-full w-full z-[-1] object-cover"
       loop
       autoPlay
       playsInline
