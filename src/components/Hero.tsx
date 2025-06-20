@@ -77,6 +77,7 @@ export default function Hero() {
         const newX = (e.clientX - bound.left) / portalRef.current!.offsetWidth;
         const newY = (e.clientY - bound.top) / portalRef.current!.offsetHeight;
         //animation
+        tl3.revert();
         tl2.pause();
         tl.resume();
         tl.to(portalRef.current, {
