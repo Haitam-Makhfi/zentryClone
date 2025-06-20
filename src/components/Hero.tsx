@@ -10,24 +10,44 @@ export default function Hero() {
   const videoElRef = useRef<HTMLVideoElement>(null);
   const portalRef = useRef<HTMLVideoElement>(null);
   const [videoIndex, setVideoIndex] = useState<number>(0);
+  const [timer, setTimer] = useState<ReturnType<typeof setTimeout>>();
   useEffect(() => {
     titleRef.current !== null && rotatationTextAnimation(titleRef.current);
-    // Mouse still logic
-    let timer: ReturnType<typeof setTimeout>;
-
-    const handleMouseMove = () => {
-      clearTimeout(timer); // clear previous timer
-      timer = setTimeout(() => {
-        gsap.to(portalRef.current, { scale: 0 });
-      }, 500); // 500ms of no movement = still
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      clearTimeout(timer);
-    };
   }, []);
+  //animation declation
+  const tl = gsap.timeline({
+    defaults: {
+      force3D: true,
+    },
+    paused: true,
+  });
+  const tl2 = gsap.timeline({
+    defaults: {
+      force3D: true,
+    },
+    paused: true,
+  });
+  const tl3 = gsap.timeline({
+    defaults: {
+      force3D: true,
+    },
+  });
+  gsap.set(portalRef.current, {
+    transformOrigin: "center center -100px",
+    transformPerspective: 600,
+  });
+  const clearTimerPortal = () => {
+    clearTimeout(timer);
+    tl3.to(portalRef.current, {
+      scale: 1.2, // Slightly grow (inhale)
+      duration: 1, // Inhale duration
+      ease: "power1.inOut",
+      yoyo: true,
+      repeat: -1, // Infinite loop
+    });
+
+    // tl2.revert();
+  };
   gsap.registerPlugin(CustomEase);
   return (
     <section
@@ -38,11 +58,15 @@ export default function Hero() {
         videoElRef.current?.load();
       }}
       onMouseMove={(e) => {
-        //3D tilte
         const { innerWidth, innerHeight } = window;
+        //calculating progress
+        const progressX = e.clientX / innerWidth;
+        const progressY = e.clientY / innerHeight;
+        const average = (progressX + progressY) / 2;
+        //3D tilte
         /// Normalize cursor position from -1 to 1
-        const x = (e.clientX / innerWidth) * 2 - 1;
-        const y = (e.clientY / innerHeight) * 2 - 1;
+        const x = progressX * 2 - 1;
+        const y = progressY * 2 - 1;
         /// Define max rotation in degrees
         const maxRotation = 40;
         /// Invert y to make movement feel natural
@@ -53,34 +77,46 @@ export default function Hero() {
         const newX = (e.clientX - bound.left) / portalRef.current!.offsetWidth;
         const newY = (e.clientY - bound.top) / portalRef.current!.offsetHeight;
         //animation
-        const tl = gsap.timeline();
-        gsap.set(portalRef.current, {
-          transformOrigin: "center center -100px",
-          transformPerspective: 600,
-        });
+        tl2.pause();
+        tl.resume();
         tl.to(portalRef.current, {
           x: newX,
           y: newY,
           rotateX,
           rotateY,
+          duration: 2,
+          ease: "circ.in",
         });
         tl.to(
           portalRef.current,
           {
-            duration: 3,
+            duration: 2,
             scale: 1,
-            ease: CustomEase.create(
-              "custom",
-              "M0,0 C0.173,0.204 0.737,0.051 1,1 "
-            ),
+            ease: "power2.in",
           },
           "<"
         );
+        tl.progress(average);
+        /// Mouse still logic
+        const handleMouseMove = () => {
+          clearTimeout(timer); // clear previous timer
+          const timerVar = setTimeout(() => {
+            tl.pause();
+            tl2.resume();
+            tl2.to(portalRef.current, {
+              duration: 2,
+              scale: 0,
+              ease: "power2.out",
+            });
+          }, 500); // 500ms of no movement = still
+          setTimer(timerVar);
+        };
+        handleMouseMove();
       }}
     >
       <Nav />
       <HeroBgModel videoIndex={videoIndex} videoElRef={videoElRef} />
-      <VideoPortal portalRef={portalRef} />
+      <VideoPortal portalRef={portalRef} clearTimerPortal={clearTimerPortal} />
     </section>
   );
 }
