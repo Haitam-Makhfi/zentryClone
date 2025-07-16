@@ -1,20 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import CustomEase from "gsap/CustomEase";
 import rotatationTextAnimation from "../Hooks/rotatationTextAnimation";
 import Nav from "./Nav";
-import HeroBgModel from "./HeroBg";
+// import HeroBg from "./HeroBg";
 import VideoPortal from "./VideoPortal";
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const videoElRef = useRef<HTMLVideoElement>(null);
-  const portalRef = useRef<HTMLVideoElement>(null);
+  const portalRef = useRef<HTMLDivElement>(null);
   const [videoIndex, setVideoIndex] = useState<number>(0);
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout>>();
   const [portalOpen, setPortalOpen] = useState<boolean>(false);
+  const [heroBgState, setHeroBgState] = useState<boolean>(true);
   useEffect(() => {
     titleRef.current !== null && rotatationTextAnimation(titleRef.current);
   }, []);
+  // const videoArray = [hero1, hero2, hero3, hero4];
   //animation declation
   const tl = gsap.timeline({
     defaults: {
@@ -39,17 +40,16 @@ export default function Hero() {
   });
   const clearTimerPortal = () => {
     clearTimeout(timer);
-    tl3.to(portalRef.current, {
-      scale: 1.2, // Slightly grow (inhale)
-      duration: 1, // Inhale duration
-      ease: "power1.inOut",
-      yoyo: true,
-      repeat: -1, // Infinite loop
-    });
-
-    // tl2.revert();
+    !portalOpen
+      ? tl3.to(portalRef.current, {
+          scale: 1.2, // Slightly grow (inhale)
+          duration: 1, // Inhale duration
+          ease: "power1.inOut",
+          yoyo: true,
+          repeat: -1, // Infinite loop
+        })
+      : null;
   };
-  gsap.registerPlugin(CustomEase);
   return (
     <section
       id="hero"
@@ -89,15 +89,15 @@ export default function Hero() {
             y: newY,
             rotateX,
             rotateY,
-            duration: 2,
+            duration: 0.4,
             ease: "circ.in",
           });
           tl.to(
             portalRef.current,
             {
-              duration: 2,
+              duration: 0.4,
               scale: 1,
-              ease: "power2.in",
+              ease: "circ.in",
             },
             "<"
           );
@@ -121,13 +121,14 @@ export default function Hero() {
       }}
     >
       <Nav />
-      <HeroBgModel videoIndex={videoIndex} videoElRef={videoElRef} />
-      <VideoPortal
-        portalRef={portalRef}
-        clearTimerPortal={clearTimerPortal}
-        tls={[tl, tl2, tl3]}
-        setPortalOpen={setPortalOpen}
-      />
+      <div id="slides" className="h-full w-full">
+        <VideoPortal
+          portalRef={portalRef}
+          clearTimerPortal={clearTimerPortal}
+          tls={[tl, tl2, tl3]}
+          state={[setPortalOpen, setHeroBgState]}
+        />
+      </div>
     </section>
   );
 }

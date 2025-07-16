@@ -17,7 +17,7 @@ export default function HeroBg({
         id="videoBg"
         className="fixed inset-0 h-full w-full z-[-2] object-cover"
         loop
-        // autoPlay
+        autoPlay
         playsInline
         muted
         ref={videoElRef}
