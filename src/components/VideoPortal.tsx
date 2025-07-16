@@ -19,7 +19,7 @@ export default function VideoPortal({
   tls,
   state,
 }: videoPortalProps) {
-  const [setPortalOpen, setHeroBgState] = state;
+  const [setPortalOpen] = state;
   const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {});
   return (
