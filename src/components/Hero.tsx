@@ -8,7 +8,7 @@ import VideoPortal from "./VideoPortal";
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const videoElRef = useRef<HTMLVideoElement>(null);
-  const portalRef = useRef<HTMLVideoElement>(null);
+  const portalRef = useRef<HTMLDivElement>(null);
   const [videoIndex, setVideoIndex] = useState<number>(0);
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout>>();
   const [portalOpen, setPortalOpen] = useState<boolean>(false);
@@ -126,7 +126,7 @@ export default function Hero() {
         portalRef={portalRef}
         clearTimerPortal={clearTimerPortal}
         tls={[tl, tl2, tl3]}
-        setPortalOpen={setPortalOpen}
+        state={[setPortalOpen]}
       />
     </section>
   );
