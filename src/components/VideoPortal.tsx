@@ -6,7 +6,7 @@ import {
 } from "react";
 import gsap from "gsap";
 interface videoPortalProps {
-  portalRef: RefObject<HTMLVideoElement | null>;
+  portalRef: RefObject<HTMLDivElement | null>;
   clearTimerPortal: () => void;
   tls: GSAPTimeline[];
   setPortalOpen: Dispatch<SetStateAction<boolean>>;
@@ -19,42 +19,34 @@ export default function VideoPortal({
 }: videoPortalProps) {
   useEffect(() => {});
   return (
-    <video
-      id="video-portal"
-      className="w-35 h-35 rounded-md bg-amber-600 fixed top-1/2 left-1/2 -translate-1/2  scale-0 cursor-pointer"
+    <div
+      className="w-[400px] h-[400px] bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer"
       ref={portalRef}
       onMouseMove={(e) => {
         e.stopPropagation();
       }}
-      onMouseEnter={() => {
-        clearTimerPortal();
-      }}
+      // onMouseEnter={() => {
+      //   clearTimerPortal();
+      // }}
       onClick={(e) => {
         e.stopPropagation();
         setPortalOpen(true);
         tls.forEach((tl) => {
           tl.kill();
         });
-        gsap.set(portalRef.current, {
-          width: portalRef.current?.offsetWidth,
-          height: portalRef.current?.offsetHeight,
-        });
-        portalRef.current!.className =
-          "bg-amber-600 fixed top-1/2 left-1/2 z-[-1] -translate-1/2 rounded-md";
-        gsap.to(portalRef.current, {
-          width: "100%",
-          height: "100%",
-          x: 0,
-          y: 0,
-          rotateX: 0,
-          rotateY: 0,
-          borderRadius: 0,
-          duration: 2,
-          ease: "power4.out",
-        });
+        // portalRef.current!.className =
+        //   "bg-amber-600 fixed top-1/2 left-1/2 z-[-1] -translate-1/2 rounded-md";
       }}
     >
-      <source />
-    </video>
+      <video
+        id="video-portal "
+        className="w-full h-full object-cover"
+        loop
+        // autoPlay
+        playsInline
+      >
+        <source />
+      </video>
+    </div>
   );
 }
