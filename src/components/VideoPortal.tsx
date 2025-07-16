@@ -5,6 +5,7 @@ import {
   type SetStateAction,
 } from "react";
 import gsap from "gsap";
+import hero1 from "../videos/hero-1.mp4";
 interface videoPortalProps {
   portalRef: RefObject<HTMLDivElement | null>;
   clearTimerPortal: () => void;
@@ -20,7 +21,7 @@ export default function VideoPortal({
   useEffect(() => {});
   return (
     <div
-      className="w-[400px] h-[400px] bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer"
+      className="w-full h-full bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer"
       ref={portalRef}
       onMouseMove={(e) => {
         e.stopPropagation();
@@ -39,13 +40,13 @@ export default function VideoPortal({
       }}
     >
       <video
-        id="video-portal "
+        id="video-portal"
         className="w-full h-full object-cover"
         loop
         // autoPlay
         playsInline
       >
-        <source />
+        <source src={hero1} type="video/mp4" />
       </video>
     </div>
   );

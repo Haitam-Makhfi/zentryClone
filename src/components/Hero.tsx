@@ -57,7 +57,7 @@ export default function Hero() {
       }}
       onMouseMove={(e) => {
         if (!portalOpen) {
-          // const { innerWidth, innerHeight } = window;
+          const { innerWidth, innerHeight } = window;
           // //calculating progress
           // //3D tilte
           // /// Normalize cursor position from -1 to 1
@@ -76,8 +76,8 @@ export default function Hero() {
           //   (e.clientY - bound.top) / portalRef.current!.offsetHeight;
           const box = portalRef.current;
           const hero = heroRef.current;
-          const width = 300;
-          const height = 300;
+          const width = 150;
+          const height = 150;
           const progressX = e.clientX / hero!.offsetWidth;
           const progressY = e.clientY / hero!.offsetHeight;
           const average = (progressX + progressY) / 2;
@@ -108,115 +108,126 @@ export default function Hero() {
           let bottomLeftX;
           let bottomLeftY;
           if (dx > 0.2 && dy < 0.2 && dy > -0.2) {
-            topLeftX = 100 + dx * maxOffset * 2;
-            topLeftY = 100 + dy * maxOffset;
+            //right
+            topLeftX = innerWidth / 2 + dx * maxOffset * 2;
+            topLeftY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            topRightX = width + dx * maxOffset;
-            topRightY = 110 + dy * maxOffset;
+            topRightX = innerWidth / 2 + width + dx * maxOffset;
+            topRightY = innerHeight / 2 - 75 + 10 + dy * maxOffset;
 
-            bottomRightX = width + dx * maxOffset;
-            bottomRightY = height - 10 + dy * maxOffset;
+            bottomRightX = innerWidth / 2 + width + dx * maxOffset;
+            bottomRightY = innerHeight / 2 - 75 + height - 10 + dy * maxOffset;
 
-            bottomLeftX = 100 + dx * maxOffset * 2;
-            bottomLeftY = height + dy * maxOffset;
+            bottomLeftX = innerWidth / 2 + dx * maxOffset * 2;
+            bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset;
           } else if (dx < -0.2 && dy < 0.2 && dy > -0.2) {
-            topLeftX = 100 + dx * maxOffset;
-            topLeftY = 110 + dy * maxOffset;
+            //left
+            topLeftX = innerWidth / 2 - 75 + dx * maxOffset;
+            topLeftY = innerHeight / 2 - 75 + 10 + dy * maxOffset;
 
-            topRightX = width + dx * maxOffset * 2;
-            topRightY = 100 + dy * maxOffset;
+            topRightX = innerWidth / 2 - 75 + width + dx * maxOffset * 2;
+            topRightY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            bottomRightX = width + dx * maxOffset * 2;
-            bottomRightY = height + dy * maxOffset;
+            bottomRightX = innerWidth / 2 - 75 + width + dx * maxOffset * 2;
+            bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset;
 
-            bottomLeftX = 100 + dx * maxOffset;
-            bottomLeftY = height - 10 + dy * maxOffset;
+            bottomLeftX = innerWidth / 2 - 75 + dx * maxOffset;
+            bottomLeftY = innerHeight / 2 - 75 + height - 10 + dy * maxOffset;
           }
           if (dy > 0 && dx < 0.2 && dx > -0.2) {
-            topLeftX = 100 + dx * maxOffset;
-            topLeftY = 100 + dy * maxOffset * 2;
+            //bottom
+            topLeftX = innerWidth / 2 - 75 + dx * maxOffset;
+            topLeftY = innerHeight / 2 - 75 + dy * maxOffset * 2;
 
-            topRightX = width + dx * maxOffset;
-            topRightY = 100 + dy * maxOffset * 2;
+            topRightX = innerWidth / 2 - 75 + width + dx * maxOffset;
+            topRightY = innerHeight / 2 - 75 + dy * maxOffset * 2;
 
-            bottomRightX = width - 5 + dx * maxOffset;
-            bottomRightY = height + dy * maxOffset;
+            bottomRightX = innerWidth / 2 - 75 + width - 5 + dx * maxOffset;
+            bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset;
 
-            bottomLeftX = 100 + 5 + dx * maxOffset;
-            bottomLeftY = height + dy * maxOffset;
+            bottomLeftX = innerWidth / 2 - 75 + 5 + dx * maxOffset;
+            bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset;
           } else if (dy < 0 && dx < 0.2 && dx > -0.2) {
-            topLeftX = 100 + 5 + dx * maxOffset;
-            topLeftY = 100 + dy * maxOffset;
+            //top
+            topLeftX = innerWidth / 2 - 75 + 5 + dx * maxOffset;
+            topLeftY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            topRightX = width - 5 + dx * maxOffset;
-            topRightY = 100 + dy * maxOffset;
+            topRightX = innerWidth / 2 - 75 + width - 5 + dx * maxOffset;
+            topRightY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            bottomRightX = width + dx * maxOffset;
-            bottomRightY = height + dy * maxOffset * 2;
+            bottomRightX = innerWidth / 2 - 75 + width + dx * maxOffset;
+            bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset * 2;
 
-            bottomLeftX = 100 + dx * maxOffset;
-            bottomLeftY = height + dy * maxOffset * 2;
+            bottomLeftX = innerWidth / 2 - 75 + dx * maxOffset;
+            bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset * 2;
           }
           if (dy < -0.2 && dx > 0.2) {
-            topLeftX = 100 - 10 + dx * maxOffset * 2;
-            topLeftY = 100 + 15 + dy * maxOffset * 2;
+            //top right
+            topLeftX = innerWidth / 2 - 10 + dx * maxOffset * 2;
+            topLeftY = innerHeight / 2 - 75 + 15 + dy * maxOffset * 2;
 
-            topRightX = width - 5 + dx * maxOffset;
-            topRightY = 100 + dy * maxOffset;
+            topRightX = innerWidth / 2 + width - 5 + dx * maxOffset;
+            topRightY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            bottomRightX = width + 10 + dx * maxOffset;
-            bottomRightY = height - 15 + dy * maxOffset;
+            bottomRightX = innerWidth / 2 + width + 10 + dx * maxOffset;
+            bottomRightY = innerHeight / 2 - 75 + height - 15 + dy * maxOffset;
 
-            bottomLeftX = 100 + dx * maxOffset * 2;
-            bottomLeftY = height + dy * maxOffset * 2;
+            bottomLeftX = innerWidth / 2 + dx * maxOffset * 2;
+            bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset * 2;
           } else if (dy < -0.2 && dx < -0.2) {
-            topLeftX = 100 + 5 + dx * maxOffset;
-            topLeftY = 100 + dy * maxOffset;
+            //top left
+            topLeftX = innerWidth / 2 - 75 + 5 + dx * maxOffset;
+            topLeftY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            topRightX = width + 10 + dx * maxOffset * 2;
-            topRightY = 100 + 15 + dy * maxOffset * 2;
+            topRightX = innerWidth / 2 - 75 + width + 10 + dx * maxOffset * 2;
+            topRightY = innerHeight / 2 - 75 + 15 + dy * maxOffset * 2;
 
-            bottomRightX = width + dx * maxOffset * 2;
-            bottomRightY = height + dy * maxOffset * 2;
+            bottomRightX = innerWidth / 2 - 75 + width + dx * maxOffset * 2;
+            bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset * 2;
 
-            bottomLeftX = 100 - 10 + dx * maxOffset;
-            bottomLeftY = height - 15 + dy * maxOffset;
+            bottomLeftX = innerWidth / 2 - 75 - 10 + dx * maxOffset;
+            bottomLeftY = innerHeight / 2 - 75 + height - 15 + dy * maxOffset;
           } else if (dy > 0.2 && dx > 0.2) {
-            topLeftX = 100 + 5 + dx * maxOffset * 2;
-            topLeftY = 100 + dy * maxOffset * 2;
+            //bottom right
+            topLeftX = innerWidth / 2 + 5 + dx * maxOffset * 2;
+            topLeftY = innerHeight / 2 - 75 + dy * maxOffset * 2;
 
-            topRightX = width + 10 + dx * maxOffset;
-            topRightY = 100 + 15 + dy * maxOffset;
+            topRightX = innerWidth / 2 + width + 10 + dx * maxOffset;
+            topRightY = innerHeight / 2 - 75 + 15 + dy * maxOffset;
 
-            bottomRightX = width + dx * maxOffset;
-            bottomRightY = height + dy * maxOffset;
+            bottomRightX = innerWidth / 2 + width + dx * maxOffset;
+            bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset;
 
-            bottomLeftX = 100 - 10 + dx * maxOffset * 2;
-            bottomLeftY = height - 15 + dy * maxOffset * 2;
+            bottomLeftX = innerWidth / 2 - 10 + dx * maxOffset * 2;
+            bottomLeftY =
+              innerHeight / 2 - 75 + height - 15 + dy * maxOffset * 2;
           } else if (dy > 0.2 && dx < -0.2) {
-            topLeftX = 100 - 10 + dx * maxOffset;
-            topLeftY = 100 + 15 + dy * maxOffset;
+            //bottom left
+            topLeftX = innerWidth / 2 - 75 - 10 + dx * maxOffset;
+            topLeftY = innerHeight / 2 - 75 + 15 + dy * maxOffset;
 
-            topRightX = width - 5 + dx * maxOffset * 2;
-            topRightY = 100 + dy * maxOffset * 2;
+            topRightX = innerWidth / 2 - 75 + width - 5 + dx * maxOffset * 2;
+            topRightY = innerHeight / 2 - 75 + dy * maxOffset * 2;
 
-            bottomRightX = width + 10 + dx * maxOffset * 2;
-            bottomRightY = height - 15 + dy * maxOffset * 2;
+            bottomRightX =
+              innerWidth / 2 - 75 + width + 10 + dx * maxOffset * 2;
+            bottomRightY =
+              innerHeight / 2 - 75 + height - 15 + dy * maxOffset * 2;
 
-            bottomLeftX = 100 + dx * maxOffset;
-            bottomLeftY = height + dy * maxOffset;
+            bottomLeftX = innerWidth / 2 - 75 + dx * maxOffset;
+            bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset;
           } else if (dx < 0.2 && dx > -0.2 && dy < 0.2 && dy > -0.2) {
-            topLeftX = 100 + dx * maxOffset;
-            topLeftY = 100 + dy * maxOffset;
+            topLeftX = innerWidth / 2 - 75 + dx * maxOffset;
+            topLeftY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            topRightX = width + dx * maxOffset;
-            topRightY = 100 + dy * maxOffset;
+            topRightX = innerWidth / 2 - 75 + width + dx * maxOffset;
+            topRightY = innerHeight / 2 - 75 + dy * maxOffset;
 
-            bottomRightX = width + dx * maxOffset;
-            bottomRightY = height + dy * maxOffset;
+            bottomRightX = innerWidth / 2 - 75 + width + dx * maxOffset;
+            bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset;
 
-            bottomLeftX = 100 + dx * maxOffset;
-            bottomLeftY = height + dy * maxOffset;
+            bottomLeftX = innerWidth / 2 - 75 + dx * maxOffset;
+            bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset;
           }
           const newPath = `path("M ${topLeftX} ${topLeftY} L ${topRightX} ${topRightY} L ${bottomRightX} ${bottomRightY} L ${bottomLeftX} ${bottomLeftY} Z")`;
           // console.log(getComputedStyle(boxRef.current!).clipPath);
