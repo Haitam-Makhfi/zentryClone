@@ -2,17 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import rotatationTextAnimation from "../Hooks/rotatationTextAnimation";
 import Nav from "./Nav";
-// import HeroBgModel from "./HeroBg";
 import VideoPortal from "./VideoPortal";
+import VideoPortal2 from "./VideoPortal2";
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const videoElRef = useRef<HTMLVideoElement>(null);
-  const portalRef = useRef<HTMLDivElement>(null);
+  const portalRef1 = useRef<HTMLDivElement>(null);
+  const portalRef2 = useRef<HTMLDivElement>(null);
+  // const portalRef3 = useRef<HTMLDivElement>(null);
+  // const portalRef4 = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  // const [videoIndex, setVideoIndex] = useState<number>(0);
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout>>();
   const [portalOpen, setPortalOpen] = useState<boolean>(false);
-  // const [heroBgState, setHeroBgState] = useState<boolean>(true);
   useEffect(() => {
     titleRef.current !== null && rotatationTextAnimation(titleRef.current);
   }, []);
@@ -37,15 +38,15 @@ export default function Hero() {
   });
   const clearTimerPortal = () => {
     clearTimeout(timer);
-    !portalOpen
-      ? tl3.to(portalRef.current, {
-          scale: 1.2, // Slightly grow (inhale)
-          duration: 1, // Inhale duration
-          ease: "power1.inOut",
-          yoyo: true,
-          repeat: -1, // Infinite loop
-        })
-      : null;
+    // !portalOpen
+    //   ? tl3.to(portalRef.current, {
+    //       scale: 1.2, // Slightly grow (inhale)
+    //       duration: 1, // Inhale duration
+    //       ease: "power1.inOut",
+    //       yoyo: true,
+    //       repeat: -1, // Infinite loop
+    //     })
+    //   : null;
   };
   return (
     <section
@@ -75,16 +76,14 @@ export default function Hero() {
           //   (e.clientX - bound.left) / portalRef.current!.offsetWidth;
           // const newY =
           //   (e.clientY - bound.top) / portalRef.current!.offsetHeight;
-          const box = portalRef.current;
+          // const box = portalRef2.current;
           const hero = heroRef.current;
           const width = 150;
           const height = 150;
           // const progressX = e.clientX / hero!.offsetWidth;
           // const progressY = e.clientY / hero!.offsetHeight;
           // const average = (progressX + progressY) / 2;
-          // const w = 200;
-          // const h = 200;
-          if (!box || !hero) return;
+          if (!hero) return;
           // Mouse position relative to center
           const heroRect = hero.getBoundingClientRect();
           const mouseX = e.clientX - heroRect.left;
@@ -95,7 +94,6 @@ export default function Hero() {
 
           const dx = (mouseX - centerX) / centerX; // -1 to 1
           const dy = (mouseY - centerY) / centerY; // -1 to 1
-          console.log("dx:" + dx + " dy:" + dy);
 
           const maxOffset = 50;
 
@@ -233,7 +231,7 @@ export default function Hero() {
           const newPath = `path("M ${topLeftX} ${topLeftY} L ${topRightX} ${topRightY} L ${bottomRightX} ${bottomRightY} L ${bottomLeftX} ${bottomLeftY} Z")`;
           // console.log(getComputedStyle(boxRef.current!).clipPath);
 
-          gsap.to(portalRef.current, {
+          gsap.to(portalRef2.current, {
             "clip-path": newPath,
             duration: 0.4,
             ease: "none",
@@ -279,10 +277,15 @@ export default function Hero() {
       }}
     >
       <Nav />
-      {/* <HeroBgModel videoIndex={videoIndex} videoElRef={videoElRef} /> */}
       <div id="slides" className="absolute inset-0">
         <VideoPortal
-          portalRef={portalRef}
+          portalRef1={portalRef1}
+          clearTimerPortal={clearTimerPortal}
+          tls={[tl, tl2, tl3]}
+          state={[setPortalOpen]}
+        />
+        <VideoPortal2
+          refs={[heroRef, portalRef2]}
           clearTimerPortal={clearTimerPortal}
           tls={[tl, tl2, tl3]}
           state={[setPortalOpen]}

@@ -1,35 +1,34 @@
 import {
   useEffect,
-  useRef,
   type Dispatch,
   type RefObject,
   type SetStateAction,
 } from "react";
-import gsap from "gsap";
+// import gsap from "gsap";
 import hero1 from "../videos/hero-1.mp4";
-export interface videoPortalProps {
-  portalRef: RefObject<HTMLDivElement | null>;
+interface videoPortalProps {
+  portalRef1?: RefObject<HTMLDivElement | null>;
   clearTimerPortal: () => void;
   tls: GSAPTimeline[];
   state: [setPortalOpen: Dispatch<SetStateAction<boolean>>];
 }
 export default function VideoPortal({
-  portalRef,
-  clearTimerPortal,
+  portalRef1,
+  // clearTimerPortal,
   tls,
   state,
 }: videoPortalProps) {
   const [setPortalOpen] = state;
-  const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {});
   return (
     <div
       id="video-portal"
-      className="w-full h-full bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer"
-      ref={portalRef}
-      onMouseMove={(e) => {
-        e.stopPropagation();
-      }}
+      className="w-full h-full bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2 z-1"
+      ref={portalRef1}
+      // onMouseMove={(e) => {
+      //   e.stopPropagation();
+      // }}
+      style={{ clipPath: "path(M0 0 L100% 0 L100% 100% L0 100% Z)" }}
       // onMouseEnter={() => {
       //   clearTimerPortal();
       // }}
@@ -46,9 +45,10 @@ export default function VideoPortal({
       <video
         id="video-portal"
         className="w-full h-full object-cover"
+        autoPlay
         loop
-        // autoPlay
         playsInline
+        muted
       >
         <source src={hero1} type="video/mp4" />
       </video>

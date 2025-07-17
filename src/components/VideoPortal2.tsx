@@ -1,50 +1,58 @@
-import gsap from "gsap";
-import type { videoPortalProps } from "./VideoPortal";
-export default function VideoPortal2({
-  portalRef,
-  clearTimerPortal,
+import { type RefObject, type Dispatch, type SetStateAction } from "react";
+// import gsap from "gsap";
+import hero2 from "../videos/hero-2.mp4";
+interface videoPortalProps {
+  refs: [
+    heroRef: RefObject<HTMLDivElement | null>,
+    portalRef2?: RefObject<HTMLDivElement | null>
+  ];
+  clearTimerPortal: () => void;
+  tls: GSAPTimeline[];
+  state: [setPortalOpen: Dispatch<SetStateAction<boolean>>];
+}
+export default function VideoPortal({
+  refs,
+  // clearTimerPortal,
   tls,
   state,
 }: videoPortalProps) {
-  const [setPortalOpen, setHeroBgState] = state;
+  const [heroRef, portalRef2] = refs;
+  const [setPortalOpen] = state;
+
   return (
     <div
-      id="video-portal"
-      className="w-35 h-35 rounded-md bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2  scale-0 cursor-pointer"
-      ref={portalRef}
-      onMouseMove={(e) => {
-        e.stopPropagation();
+      id="video-portal2"
+      className="w-full h-full bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer z-2"
+      ref={portalRef2}
+      style={{
+        clipPath: `circle(0% at 50% 50%)`,
       }}
-      onMouseEnter={() => {
-        clearTimerPortal();
-      }}
+      // onMouseMove={(e) => {
+      //   e.stopPropagation();
+      // }}
+      // onMouseEnter={() => {
+      //   clearTimerPortal();
+      // }}
       onClick={(e) => {
         e.stopPropagation();
         setPortalOpen(true);
         tls.forEach((tl) => {
           tl.kill();
         });
-        gsap.set(portalRef.current, {
-          width: portalRef.current?.offsetWidth,
-          height: portalRef.current?.offsetHeight,
-        });
-        portalRef.current!.className =
-          "bg-amber-600 absolute top-1/2 left-1/2 z-[-1] -translate-1/2 rounded-md";
-        gsap.to(portalRef.current, {
-          width: "100%",
-          height: "100%",
-          x: 0,
-          y: 0,
-          rotateX: 0,
-          rotateY: 0,
-          borderRadius: 0,
-          duration: 2,
-          ease: "power4.out",
-        });
-        setTimeout(() => {
-          setHeroBgState(false);
-        }, 2000);
+        // portalRef.current!.className =
+        //   "bg-amber-600 fixed top-1/2 left-1/2 z-[-1] -translate-1/2 rounded-md";
       }}
-    ></div>
+    >
+      <video
+        id="video-portal"
+        className="w-full h-full object-cover"
+        loop
+        // autoPlay
+        playsInline
+        muted
+      >
+        <source src={hero2} type="video/mp4" />
+      </video>
+    </div>
   );
 }

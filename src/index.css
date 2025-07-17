@@ -8,7 +8,8 @@ body {
 h1 div {
   opacity: 0;
 }
-#video-portal {
+#video-portal,
+#video-portal2 {
   will-change: transform;
   transform-style: preserve-3d;
 }
