@@ -10,15 +10,18 @@ interface videoPortalProps {
   portalRef1?: RefObject<HTMLDivElement | null>;
   clearTimerPortal: () => void;
   tls: GSAPTimeline[];
-  state: [setPortalOpen: Dispatch<SetStateAction<boolean>>];
+  state: [
+    portalOpen: boolean,
+    setPortalOpen: Dispatch<SetStateAction<boolean>>
+  ];
 }
 export default function VideoPortal({
   portalRef1,
-  // clearTimerPortal,
+  clearTimerPortal,
   tls,
   state,
 }: videoPortalProps) {
-  const [setPortalOpen] = state;
+  const [portalOpen, setPortalOpen] = state;
   useEffect(() => {});
   return (
     <div
@@ -29,10 +32,12 @@ export default function VideoPortal({
       //   e.stopPropagation();
       // }}
       style={{ clipPath: "path(M0 0 L100% 0 L100% 100% L0 100% Z)" }}
-      // onMouseEnter={() => {
-      //   clearTimerPortal();
-      // }}
+      onMouseEnter={() => {
+        if (portalOpen) return null;
+        clearTimerPortal();
+      }}
       onClick={(e) => {
+        if (portalOpen) return null;
         e.stopPropagation();
         setPortalOpen(true);
         tls.forEach((tl) => {

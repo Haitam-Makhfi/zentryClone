@@ -1,5 +1,10 @@
-import { type RefObject, type Dispatch, type SetStateAction } from "react";
-// import gsap from "gsap";
+import {
+  type RefObject,
+  type Dispatch,
+  type SetStateAction,
+  useRef,
+} from "react";
+import gsap from "gsap";
 import hero2 from "../videos/hero-2.mp4";
 interface videoPortalProps {
   refs: [
@@ -8,39 +13,55 @@ interface videoPortalProps {
   ];
   clearTimerPortal: () => void;
   tls: GSAPTimeline[];
-  state: [setPortalOpen: Dispatch<SetStateAction<boolean>>];
+  state: [
+    portalOpen: boolean,
+    setPortalOpen: Dispatch<SetStateAction<boolean>>
+  ];
 }
 export default function VideoPortal({
   refs,
-  // clearTimerPortal,
+  clearTimerPortal,
   tls,
   state,
 }: videoPortalProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [heroRef, portalRef2] = refs;
-  const [setPortalOpen] = state;
-
+  const [tl3] = tls;
+  const [portalOpen, setPortalOpen] = state;
+  const { innerWidth, innerHeight } = window;
   return (
     <div
       id="video-portal2"
       className="w-full h-full bg-amber-600 absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer z-2"
       ref={portalRef2}
       style={{
-        clipPath: `circle(0% at 50% 50%)`,
+        clipPath: `path(" M${innerWidth / 2 - 1} ${innerHeight / 2 - 1} L${
+          innerWidth / 2 + 1
+        } ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
+          innerHeight / 2 + 1
+        } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`,
+        opacity: 0,
       }}
-      // onMouseMove={(e) => {
-      //   e.stopPropagation();
-      // }}
-      // onMouseEnter={() => {
-      //   clearTimerPortal();
-      // }}
+      onMouseMove={(e) => {
+        e.stopPropagation();
+      }}
+      onMouseEnter={() => {
+        clearTimerPortal();
+      }}
       onClick={(e) => {
+        if (portalOpen) return null;
         e.stopPropagation();
         setPortalOpen(true);
         tls.forEach((tl) => {
+          tl3.revert();
           tl.kill();
         });
-        // portalRef.current!.className =
-        //   "bg-amber-600 fixed top-1/2 left-1/2 z-[-1] -translate-1/2 rounded-md";
+        gsap.to(portalRef2!.current, {
+          "clip-path": `path("M 0 0 L ${innerWidth} 0 L ${innerWidth} ${innerHeight} L 0 ${innerHeight} Z")`,
+          duration: 1,
+          ease: "power1.inOut",
+        });
+        videoRef.current!.play();
       }}
     >
       <video
@@ -50,6 +71,7 @@ export default function VideoPortal({
         // autoPlay
         playsInline
         muted
+        ref={videoRef}
       >
         <source src={hero2} type="video/mp4" />
       </video>
