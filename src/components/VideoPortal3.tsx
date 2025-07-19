@@ -6,9 +6,9 @@ import {
   type HTMLAttributes,
 } from "react";
 import gsap from "gsap";
-import hero2 from "../videos/hero-2.mp4";
+import hero3 from "../videos/hero-3.mp4";
 interface videoPortalProps extends HTMLAttributes<HTMLDivElement> {
-  portalRef2: RefObject<HTMLDivElement | null>;
+  portalRef3: RefObject<HTMLDivElement | null>;
   funcs: [clearTimerPortal: () => void];
   tls: GSAPTimeline[];
   state: [
@@ -18,8 +18,8 @@ interface videoPortalProps extends HTMLAttributes<HTMLDivElement> {
     setPortalIndex: Dispatch<SetStateAction<number>>
   ];
 }
-export default function VideoPortal2({
-  portalRef2,
+export default function VideoPortal3({
+  portalRef3,
   funcs,
   tls,
   state,
@@ -32,9 +32,9 @@ export default function VideoPortal2({
   const { innerWidth, innerHeight } = window;
   return (
     <div
-      id="video-portal2"
+      id="video-portal3"
       className="w-full h-full absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer"
-      ref={portalRef2}
+      ref={portalRef3}
       // onMouseMove={(e) => {
       //   e.stopPropagation();
       // }}
@@ -49,7 +49,7 @@ export default function VideoPortal2({
           tl3.revert();
           tl.kill();
         });
-        gsap.to(portalRef2!.current, {
+        gsap.to(portalRef3!.current, {
           "clip-path": `path("M 0 0 L ${innerWidth} 0 L ${innerWidth} ${innerHeight} L 0 ${innerHeight} Z")`,
           duration: 1,
           ease: "power1.out",
@@ -67,7 +67,7 @@ export default function VideoPortal2({
         muted
         ref={videoRef}
       >
-        <source src={hero2} type="video/mp4" />
+        <source src={hero3} type="video/mp4" />
       </video>
     </div>
   );

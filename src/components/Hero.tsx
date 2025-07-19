@@ -1,23 +1,103 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import rotatationTextAnimation from "../Hooks/rotatationTextAnimation";
 import Nav from "./Nav";
 import VideoPortal from "./VideoPortal";
 import VideoPortal2 from "./VideoPortal2";
+import VideoPortal3 from "./VideoPortal3";
+import VideoPortal4 from "./VideoPortal4";
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const videoElRef = useRef<HTMLVideoElement>(null);
+  // const videoElRef = useRef<HTMLVideoElement>(null);
   const portalRef1 = useRef<HTMLDivElement>(null);
   const portalRef2 = useRef<HTMLDivElement>(null);
-  // const portalRef3 = useRef<HTMLDivElement>(null);
-  // const portalRef4 = useRef<HTMLDivElement>(null);
+  const portalRef3 = useRef<HTMLDivElement>(null);
+  const portalRef4 = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout>>();
-  const [portalOpen, setPortalOpen] = useState<boolean>(false);
+  const [portalOpen1, setPortalOpen1] = useState<boolean>(true);
+  const [portalOpen2, setPortalOpen2] = useState<boolean>(false);
+  const [portalOpen3, setPortalOpen3] = useState<boolean>(false);
+  const [portalOpen4, setPortalOpen4] = useState<boolean>(false);
+  const [refIndex, setRefIndex] = useState<number>(1);
+  const [portalIndex, setPortalIndex] = useState<number>(1);
   useEffect(() => {
     titleRef.current !== null && rotatationTextAnimation(titleRef.current);
-  }, []);
-  // const videoArray = [hero1, hero2, hero3, hero4];
+    console.log(refIndex);
+    if (portalIndex == 4 || refIndex == 4) {
+      setPortalOpen1(false);
+      setRefIndex(0);
+      setPortalIndex(0);
+      portalRef1.current!.style.clipPath = `path(" M${innerWidth / 2 - 1} ${
+        innerHeight / 2 - 1
+      } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
+        innerHeight / 2 + 1
+      } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`;
+      portalRef1.current!.style.opacity = "0";
+    }
+  }, [portalIndex, portalOpen1]);
+  useLayoutEffect(() => {
+    //handling on MouseMove event
+    if (refIndex == 0 && refArray[3] && refArray[refIndex]) {
+      const prevEl = refArray[3]?.current;
+      const currEl = refArray[refIndex]?.current;
+
+      const stopPropagation = (e: MouseEvent) => e.stopPropagation();
+
+      if (prevEl) prevEl.onmousemove = null;
+      if (currEl) currEl.addEventListener("mousemove", stopPropagation);
+
+      return () => {
+        if (currEl) currEl.removeEventListener("mousemove", stopPropagation);
+      };
+    } else if (refIndex !== 0 && refArray[refIndex - 1] && refArray[refIndex]) {
+      const prevEl = refArray[refIndex - 1]?.current;
+      const currEl = refArray[refIndex]?.current;
+
+      const stopPropagation = (e: MouseEvent) => e.stopPropagation();
+
+      if (prevEl) prevEl.onmousemove = null;
+      if (currEl) currEl.addEventListener("mousemove", stopPropagation);
+
+      return () => {
+        if (currEl) currEl.removeEventListener("mousemove", stopPropagation);
+      };
+    }
+  }, [refIndex]);
+  useLayoutEffect(() => {
+    if (refIndex === 0 && refArray[3] && refArray[refIndex]) {
+      refArray[3].current!.style.zIndex = "1";
+      refArray[refIndex].current!.style.zIndex = "2";
+      refArray[3].current!.style.display = "block";
+      refArray[refIndex].current!.style.display = "block";
+
+      refArray.forEach((ref) => {
+        if (ref !== refArray[refIndex] && ref !== refArray[3] && ref.current) {
+          ref.current!.style.zIndex = "0";
+          ref.current!.style.display = "none";
+        }
+      });
+    } else if (refIndex !== 0 && refArray[refIndex - 1] && refArray[refIndex]) {
+      refArray[refIndex - 1].current!.style.zIndex = "1";
+      refArray[refIndex].current!.style.zIndex = "2";
+      refArray[refIndex - 1].current!.style.display = "block";
+      refArray[refIndex].current!.style.display = "block";
+
+      refArray.forEach((ref) => {
+        if (
+          ref !== refArray[refIndex] &&
+          ref !== refArray[refIndex - 1] &&
+          ref.current
+        ) {
+          ref.current!.style.zIndex = "0";
+          ref.current!.style.display = "none";
+        }
+      });
+    }
+  }, [refIndex]);
+  // Arrays
+  const refArray = [portalRef1, portalRef2, portalRef3, portalRef4];
+  const portalArray = [portalOpen1, portalOpen2, portalOpen3, portalOpen4];
   //animation declation
   const tl = gsap.timeline({
     defaults: {
@@ -36,10 +116,12 @@ export default function Hero() {
       force3D: true,
     },
   });
+  const { innerWidth, innerHeight } = window;
+  //functions
   const clearTimerPortal = () => {
     clearTimeout(timer);
-    !portalOpen
-      ? tl3.to(portalRef2.current, {
+    !portalArray[portalIndex]
+      ? tl3.to(refArray[refIndex].current, {
           "clip-path": `path(" M${innerWidth / 2 - 100} ${
             innerHeight / 2 - 100
           } L${innerWidth / 2 + 100} ${innerHeight / 2 - 100} L${
@@ -47,10 +129,10 @@ export default function Hero() {
           } ${innerHeight / 2 + 100} L${innerWidth / 2 - 100} ${
             innerHeight / 2 + 100
           } Z")`,
-          duration: 1, // Inhale duration
+          duration: 1,
           ease: "power1.inOut",
           yoyo: true,
-          repeat: -1, // Infinite loop
+          repeat: -1,
         })
       : null;
   };
@@ -61,11 +143,10 @@ export default function Hero() {
       ref={heroRef}
       onClick={() => {
         // videoIndex < 3 ? setVideoIndex((p) => p + 1) : setVideoIndex(0);
-        videoElRef.current?.load();
+        // videoElRef.current?.load();
       }}
       onMouseMove={(e) => {
-        if (portalOpen) return null;
-        const { innerWidth, innerHeight } = window;
+        if (portalArray[portalIndex]) return null;
         // //calculating progress
         // // Normal 3D tilte
         // /// Normalize cursor position from -1 to 1
@@ -234,10 +315,10 @@ export default function Hero() {
         tl3.revert();
         tl2.pause();
         tl.resume();
-        tl.set(portalRef2.current, {
+        tl.set(refArray[refIndex].current, {
           opacity: 1,
         });
-        tl.to(portalRef2.current, {
+        tl.to(refArray[refIndex].current, {
           "clip-path": newPath,
           duration: 0.4,
           ease: "none",
@@ -247,7 +328,7 @@ export default function Hero() {
         const timerVar = setTimeout(() => {
           tl.pause();
           tl2.resume();
-          tl2.to(portalRef2.current, {
+          tl2.to(refArray[refIndex].current, {
             "clip-path": `path(" M${innerWidth / 2 - 1} ${
               innerHeight / 2 - 1
             } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${
@@ -258,7 +339,7 @@ export default function Hero() {
             duration: 0.4,
             ease: "none",
           });
-          tl2.set(portalRef2.current, {
+          tl2.set(refArray[refIndex].current, {
             opacity: 0,
           });
         }, 500); // 500ms of no movement = still
@@ -269,15 +350,56 @@ export default function Hero() {
       <div id="slides" className="absolute inset-0">
         <VideoPortal
           portalRef1={portalRef1}
-          clearTimerPortal={clearTimerPortal}
+          funcs={[clearTimerPortal]}
           tls={[tl, tl2, tl3]}
-          state={[portalOpen, setPortalOpen]}
+          state={[portalOpen1, setPortalOpen1, setRefIndex, setPortalIndex]}
+          style={{
+            clipPath: `path("M 0 0 L ${innerWidth} 0 L ${innerWidth} ${innerHeight} L 0 ${innerHeight} Z")`,
+            zIndex: 1,
+          }}
         />
         <VideoPortal2
-          refs={[heroRef, portalRef2]}
-          clearTimerPortal={clearTimerPortal}
+          portalRef2={portalRef2}
+          funcs={[clearTimerPortal]}
           tls={[tl, tl2, tl3]}
-          state={[portalOpen, setPortalOpen]}
+          state={[portalOpen2, setPortalOpen2, setRefIndex, setPortalIndex]}
+          style={{
+            clipPath: `path(" M${innerWidth / 2 - 1} ${innerHeight / 2 - 1} L${
+              innerWidth / 2 + 1
+            } ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
+              innerHeight / 2 + 1
+            } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`,
+            opacity: 0,
+            zIndex: 2,
+          }}
+        />
+        <VideoPortal3
+          portalRef3={portalRef3}
+          funcs={[clearTimerPortal]}
+          tls={[tl, tl2, tl3]}
+          state={[portalOpen3, setPortalOpen3, setRefIndex, setPortalIndex]}
+          style={{
+            clipPath: `path(" M${innerWidth / 2 - 1} ${innerHeight / 2 - 1} L${
+              innerWidth / 2 + 1
+            } ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
+              innerHeight / 2 + 1
+            } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`,
+            opacity: 0,
+          }}
+        />
+        <VideoPortal4
+          portalRef4={portalRef4}
+          funcs={[clearTimerPortal]}
+          tls={[tl, tl2, tl3]}
+          state={[portalOpen4, setPortalOpen4, setRefIndex, setPortalIndex]}
+          style={{
+            clipPath: `path(" M${innerWidth / 2 - 1} ${innerHeight / 2 - 1} L${
+              innerWidth / 2 + 1
+            } ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
+              innerHeight / 2 + 1
+            } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`,
+            opacity: 0,
+          }}
         />
       </div>
     </section>
