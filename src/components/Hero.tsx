@@ -32,9 +32,9 @@ export default function Hero() {
   useLayoutEffect(() => {
     //handling on MouseMove event
     if (
-      !refArray[refIndex] ||
-      !refArray[3] ||
-      !refArray[refIndex - 1] ||
+      refArray[refIndex] == null ||
+      refArray[3] == null ||
+      refArray[refIndex - 1] == null ||
       refIndex === 4
     ) {
       console.log("ref is not defined");
@@ -45,11 +45,11 @@ export default function Hero() {
       const currEl = refArray[0].current;
 
       const stopPropagation = (e: MouseEvent) => e.stopPropagation();
-
       if (prevEl && currEl) {
         prevEl.onmousemove = null;
         currEl.addEventListener("mousemove", stopPropagation);
         // handling iterating z-index and display
+        //for the first portal
         prevEl.style.zIndex = "1";
         prevEl.style.display = "block";
         prevEl.style.cursor = "default";
@@ -77,8 +77,10 @@ export default function Hero() {
       };
     }
     if (refIndex !== 0 && refIndex <= 3) {
-      const prevEl = refArray[refIndex - 1].current;
-      const currEl = refArray[refIndex].current;
+      const prevEl = refArray[refIndex - 1]
+        ? refArray[refIndex - 1].current
+        : null;
+      const currEl = refArray[refIndex] ? refArray[refIndex].current : null;
 
       const stopPropagation = (e: MouseEvent) => e.stopPropagation();
 
@@ -165,10 +167,6 @@ export default function Hero() {
       id="hero"
       className="relative w-full h-screen overflow-hidden"
       ref={heroRef}
-      onClick={() => {
-        // videoIndex < 3 ? setVideoIndex((p) => p + 1) : setVideoIndex(0);
-        // videoElRef.current?.load();
-      }}
       onMouseMove={(e) => {
         if (portalArray[portalIndex] || refIndex == 4) return null;
         // //calculating progress
@@ -205,14 +203,14 @@ export default function Hero() {
         const maxOffset = 50;
 
         // Corner displacements based on cursor distance from center
-        let topLeftX;
-        let topLeftY;
-        let topRightX;
-        let topRightY;
-        let bottomRightX;
-        let bottomRightY;
-        let bottomLeftX;
-        let bottomLeftY;
+        let topLeftX: number = 0;
+        let topLeftY: number = 0;
+        let topRightX: number = 0;
+        let topRightY: number = 0;
+        let bottomRightX: number = 0;
+        let bottomRightY: number = 0;
+        let bottomLeftX: number = 0;
+        let bottomLeftY: number = 0;
         if (dx > 0.2 && dy < 0.2 && dy > -0.2) {
           //right
           topLeftX = innerWidth / 2 + dx * maxOffset * 2;

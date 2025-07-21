@@ -30,7 +30,7 @@ export default function VideoPortal({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [portalOpen, refIndex, setPortalOpen, setRefIndex, setPortalIndex] =
     state;
-  const [tl3] = tls;
+  // const [tl3] = tls;
   const [clearTimerPortal] = funcs;
   const { innerWidth, innerHeight } = window;
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function VideoPortal({
         e.stopPropagation();
         setPortalOpen(true);
         tls.forEach((tl) => {
-          tl3.revert();
+          // tl3.revert();
           tl.kill();
         });
         gsap.to(portalRef1!.current, {
