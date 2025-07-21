@@ -8,7 +8,6 @@ import VideoPortal3 from "./VideoPortal3";
 import VideoPortal4 from "./VideoPortal4";
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  // const videoElRef = useRef<HTMLVideoElement>(null);
   const portalRef1 = useRef<HTMLDivElement>(null);
   const portalRef2 = useRef<HTMLDivElement>(null);
   const portalRef3 = useRef<HTMLDivElement>(null);
@@ -23,94 +22,119 @@ export default function Hero() {
   const [portalIndex, setPortalIndex] = useState<number>(1);
   useEffect(() => {
     titleRef.current !== null && rotatationTextAnimation(titleRef.current);
-    console.log(refIndex);
+    console.log(refIndex, portalRef1);
     if (portalIndex == 4 || refIndex == 4) {
       setPortalOpen1(false);
       setRefIndex(0);
       setPortalIndex(0);
-      portalRef1.current!.style.clipPath = `path(" M${innerWidth / 2 - 1} ${
-        innerHeight / 2 - 1
-      } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
-        innerHeight / 2 + 1
-      } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`;
-      portalRef1.current!.style.opacity = "0";
     }
-  }, [portalIndex, portalOpen1]);
+  }, [portalIndex, portalOpen1, refIndex]);
   useLayoutEffect(() => {
     //handling on MouseMove event
-    if (refIndex == 0 && refArray[3] && refArray[refIndex]) {
-      const prevEl = refArray[3]?.current;
-      const currEl = refArray[refIndex]?.current;
+    if (
+      !refArray[refIndex] ||
+      !refArray[3] ||
+      !refArray[refIndex - 1] ||
+      refIndex === 4
+    ) {
+      console.log("ref is not defined");
+      return;
+    }
+    if (refIndex === 0) {
+      const prevEl = refArray[3].current;
+      const currEl = refArray[0].current;
 
       const stopPropagation = (e: MouseEvent) => e.stopPropagation();
 
-      if (prevEl) prevEl.onmousemove = null;
-      if (currEl) currEl.addEventListener("mousemove", stopPropagation);
-
-      return () => {
-        if (currEl) currEl.removeEventListener("mousemove", stopPropagation);
-      };
-    } else if (refIndex !== 0 && refArray[refIndex - 1] && refArray[refIndex]) {
-      const prevEl = refArray[refIndex - 1]?.current;
-      const currEl = refArray[refIndex]?.current;
-
-      const stopPropagation = (e: MouseEvent) => e.stopPropagation();
-
-      if (prevEl) prevEl.onmousemove = null;
-      if (currEl) currEl.addEventListener("mousemove", stopPropagation);
-
+      if (prevEl && currEl) {
+        prevEl.onmousemove = null;
+        currEl.addEventListener("mousemove", stopPropagation);
+        // handling iterating z-index and display
+        prevEl.style.zIndex = "1";
+        prevEl.style.display = "block";
+        prevEl.style.cursor = "default";
+        currEl.style.zIndex = "2";
+        currEl.style.display = "block";
+        currEl.style.cursor = "pointer";
+        refArray.forEach((ref) => {
+          if (ref.current !== currEl && ref.current !== prevEl && ref.current) {
+            ref.current.style.zIndex = "0";
+            ref.current.style.display = "none";
+            ref.current.style.clipPath = `path(" M${innerWidth / 2 - 1} ${
+              innerHeight / 2 - 1
+            } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${
+              innerWidth / 2 + 1
+            } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
+              innerHeight / 2 + 1
+            } Z")`;
+            ref.current.style.opacity = "0";
+          }
+        });
+      }
+      // Cleanup function to remove the event listener
       return () => {
         if (currEl) currEl.removeEventListener("mousemove", stopPropagation);
       };
     }
-  }, [refIndex]);
-  useLayoutEffect(() => {
-    if (refIndex === 0 && refArray[3] && refArray[refIndex]) {
-      refArray[3].current!.style.zIndex = "1";
-      refArray[refIndex].current!.style.zIndex = "2";
-      refArray[3].current!.style.display = "block";
-      refArray[refIndex].current!.style.display = "block";
+    if (refIndex !== 0 && refIndex <= 3) {
+      const prevEl = refArray[refIndex - 1].current;
+      const currEl = refArray[refIndex].current;
 
-      refArray.forEach((ref) => {
-        if (ref !== refArray[refIndex] && ref !== refArray[3] && ref.current) {
-          ref.current!.style.zIndex = "0";
-          ref.current!.style.display = "none";
-        }
-      });
-    } else if (refIndex !== 0 && refArray[refIndex - 1] && refArray[refIndex]) {
-      refArray[refIndex - 1].current!.style.zIndex = "1";
-      refArray[refIndex].current!.style.zIndex = "2";
-      refArray[refIndex - 1].current!.style.display = "block";
-      refArray[refIndex].current!.style.display = "block";
+      const stopPropagation = (e: MouseEvent) => e.stopPropagation();
 
-      refArray.forEach((ref) => {
-        if (
-          ref !== refArray[refIndex] &&
-          ref !== refArray[refIndex - 1] &&
-          ref.current
-        ) {
-          ref.current!.style.zIndex = "0";
-          ref.current!.style.display = "none";
-        }
-      });
+      if (prevEl && currEl) {
+        prevEl.onmousemove = null;
+        currEl.addEventListener("mousemove", stopPropagation);
+
+        // handling iterating z-index and display
+        //for the rest of the portals
+        prevEl.style.zIndex = "1";
+        prevEl.style.display = "block";
+        prevEl.style.cursor = "default";
+        currEl.style.zIndex = "2";
+        currEl.style.display = "block";
+        currEl.style.cursor = "pointer";
+
+        refArray.forEach((ref) => {
+          if (ref.current !== currEl && ref.current !== prevEl && ref.current) {
+            ref.current.style.zIndex = "0";
+            ref.current.style.display = "none";
+            ref.current.style.clipPath = `path(" M${innerWidth / 2 - 1} ${
+              innerHeight / 2 - 1
+            } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${
+              innerWidth / 2 + 1
+            } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
+              innerHeight / 2 + 1
+            } Z")`;
+            ref.current.style.opacity = "0";
+          }
+        });
+      }
+      // Cleanup function to remove the event listener
+      return () => {
+        if (currEl) currEl.removeEventListener("mousemove", stopPropagation);
+      };
     }
   }, [refIndex]);
   // Arrays
   const refArray = [portalRef1, portalRef2, portalRef3, portalRef4];
   const portalArray = [portalOpen1, portalOpen2, portalOpen3, portalOpen4];
   //animation declation
+  ///3d tilt animation
   const tl = gsap.timeline({
     defaults: {
       force3D: true,
     },
     paused: true,
   });
+  /// shrink animation
   const tl2 = gsap.timeline({
     defaults: {
       force3D: true,
     },
     paused: true,
   });
+  /// breathing animation
   const tl3 = gsap.timeline({
     defaults: {
       force3D: true,
@@ -120,7 +144,7 @@ export default function Hero() {
   //functions
   const clearTimerPortal = () => {
     clearTimeout(timer);
-    !portalArray[portalIndex]
+    !portalArray[portalIndex] && !(refIndex == 4)
       ? tl3.to(refArray[refIndex].current, {
           "clip-path": `path(" M${innerWidth / 2 - 100} ${
             innerHeight / 2 - 100
@@ -146,7 +170,7 @@ export default function Hero() {
         // videoElRef.current?.load();
       }}
       onMouseMove={(e) => {
-        if (portalArray[portalIndex]) return null;
+        if (portalArray[portalIndex] || refIndex == 4) return null;
         // //calculating progress
         // // Normal 3D tilte
         // /// Normalize cursor position from -1 to 1
@@ -352,10 +376,15 @@ export default function Hero() {
           portalRef1={portalRef1}
           funcs={[clearTimerPortal]}
           tls={[tl, tl2, tl3]}
-          state={[portalOpen1, setPortalOpen1, setRefIndex, setPortalIndex]}
+          state={[
+            portalOpen1,
+            refIndex,
+            setPortalOpen1,
+            setRefIndex,
+            setPortalIndex,
+          ]}
           style={{
             clipPath: `path("M 0 0 L ${innerWidth} 0 L ${innerWidth} ${innerHeight} L 0 ${innerHeight} Z")`,
-            zIndex: 1,
           }}
         />
         <VideoPortal2
@@ -369,8 +398,6 @@ export default function Hero() {
             } ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
               innerHeight / 2 + 1
             } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`,
-            opacity: 0,
-            zIndex: 2,
           }}
         />
         <VideoPortal3
@@ -384,7 +411,6 @@ export default function Hero() {
             } ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
               innerHeight / 2 + 1
             } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`,
-            opacity: 0,
           }}
         />
         <VideoPortal4
@@ -398,7 +424,6 @@ export default function Hero() {
             } ${innerHeight / 2 - 1} L${innerWidth / 2 + 1} ${
               innerHeight / 2 + 1
             } L${innerWidth / 2 - 1} ${innerHeight / 2 + 1} Z")`,
-            opacity: 0,
           }}
         />
       </div>

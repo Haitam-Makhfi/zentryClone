@@ -14,6 +14,7 @@ interface videoPortalProps extends HTMLAttributes<HTMLDivElement> {
   tls: GSAPTimeline[];
   state: [
     portalOpen: boolean,
+    refIndex: number,
     setPortalOpen: Dispatch<SetStateAction<boolean>>,
     setRefIndex: Dispatch<SetStateAction<number>>,
     setPortalIndex: Dispatch<SetStateAction<number>>
@@ -27,11 +28,17 @@ export default function VideoPortal({
   ...props
 }: videoPortalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [portalOpen, setPortalOpen, setRefIndex, setPortalIndex] = state;
+  const [portalOpen, refIndex, setPortalOpen, setRefIndex, setPortalIndex] =
+    state;
   const [tl3] = tls;
   const [clearTimerPortal] = funcs;
   const { innerWidth, innerHeight } = window;
-  useEffect(() => {});
+  useEffect(() => {
+    if (refIndex === 3) {
+      videoRef.current!.pause();
+      videoRef.current!.currentTime = 0;
+    }
+  }, [refIndex]);
   return (
     <div
       id="video-portal"

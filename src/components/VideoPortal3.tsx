@@ -33,7 +33,7 @@ export default function VideoPortal3({
   return (
     <div
       id="video-portal3"
-      className="w-full h-full absolute top-1/2 left-1/2 -translate-1/2 cursor-pointer"
+      className="w-full h-full absolute top-1/2 left-1/2 -translate-1/2"
       ref={portalRef3}
       // onMouseMove={(e) => {
       //   e.stopPropagation();
