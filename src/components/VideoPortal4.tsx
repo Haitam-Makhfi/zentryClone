@@ -35,6 +35,12 @@ export default function VideoPortal3({
       videoRef.current!.pause();
       videoRef.current!.currentTime = 0;
     }
+    if (refIndex === 3 && portalRef4) {
+      portalRef4.current!.classList.add("pointer-events-none");
+      setTimeout(() => {
+        portalRef4.current!.classList.remove("pointer-events-none");
+      }, 1000);
+    }
   }, [refIndex]);
   const [clearTimerPortal] = funcs;
   const { innerWidth, innerHeight } = window;
@@ -51,7 +57,6 @@ export default function VideoPortal3({
         e.stopPropagation();
         setPortalOpen(true);
         tls.forEach((tl) => {
-          // tl3.revert();
           tl.kill();
         });
         gsap.to(portalRef4!.current, {

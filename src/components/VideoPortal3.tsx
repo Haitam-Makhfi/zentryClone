@@ -35,6 +35,12 @@ export default function VideoPortal3({
       videoRef.current!.pause();
       videoRef.current!.currentTime = 0;
     }
+    if (refIndex === 2 && portalRef3) {
+      portalRef3.current!.classList.add("pointer-events-none");
+      setTimeout(() => {
+        portalRef3.current!.classList.remove("pointer-events-none");
+      }, 1000);
+    }
   }, [refIndex]);
   const [clearTimerPortal] = funcs;
   const { innerWidth, innerHeight } = window;
@@ -43,9 +49,6 @@ export default function VideoPortal3({
       id="video-portal3"
       className="w-full h-full absolute top-1/2 left-1/2 -translate-1/2"
       ref={portalRef3}
-      // onMouseMove={(e) => {
-      //   e.stopPropagation();
-      // }}
       onMouseEnter={() => {
         clearTimerPortal();
       }}
@@ -54,7 +57,6 @@ export default function VideoPortal3({
         e.stopPropagation();
         setPortalOpen(true);
         tls.forEach((tl) => {
-          // tl3.revert();
           tl.kill();
         });
         gsap.to(portalRef3!.current, {

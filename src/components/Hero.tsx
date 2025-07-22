@@ -31,7 +31,6 @@ export default function Hero() {
   }, [portalIndex, refIndex]);
   useLayoutEffect(() => {
     //handling on MouseMove event
-    if (refIndex === 4) return;
     if (refIndex === 0) {
       const prevEl = refArray[3].current;
       const currEl = refArray[0].current;
@@ -40,35 +39,44 @@ export default function Hero() {
       if (prevEl && currEl) {
         prevEl.onmousemove = null;
         currEl.addEventListener("mousemove", stopPropagation);
-        // handling iterating z-index and display
-        //for the first portal
-        prevEl.style.zIndex = "1";
-        prevEl.style.display = "block";
-        prevEl.style.cursor = "default";
-        currEl.style.zIndex = "2";
-        currEl.style.display = "block";
-        currEl.style.cursor = "pointer";
-        refArray.forEach((ref, index) => {
-          if (ref.current !== currEl && ref.current !== prevEl && ref.current) {
-            ref.current.style.zIndex = "0";
-            ref.current.style.display = "none";
-            ref.current.style.clipPath = `path(" M${innerWidth / 2 - 1} ${
-              innerHeight / 2 - 1
-            } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${
-              innerWidth / 2 + 1
-            } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
-              innerHeight / 2 + 1
-            } Z")`;
-            ref.current.style.opacity = "0";
-            const dispatch = dispatchArray[index];
-            dispatch(false);
-          }
-        });
+        const timer = setTimeout(() => {
+          // handling iterating z-index and display
+          //for the first portal
+          prevEl.style.zIndex = "1";
+          prevEl.style.display = "block";
+          prevEl.style.cursor = "default";
+          currEl.style.zIndex = "2";
+          currEl.style.display = "block";
+          currEl.style.cursor = "pointer";
+          refArray.forEach((ref, index) => {
+            if (
+              ref.current !== currEl &&
+              ref.current !== prevEl &&
+              ref.current
+            ) {
+              gsap.set(ref.current, {
+                "clip-path": `path(" M${innerWidth / 2 - 1} ${
+                  innerHeight / 2 - 1
+                } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${
+                  innerWidth / 2 + 1
+                } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
+                  innerHeight / 2 + 1
+                } Z")`,
+                opacity: "0",
+                display: "none",
+                zIndex: "0",
+              });
+              const dispatch = dispatchArray[index];
+              dispatch(false);
+            }
+          });
+        }, 1000);
+        // Cleanup function to remove the event listener
+        return () => {
+          currEl.removeEventListener("mousemove", stopPropagation);
+          clearTimeout(timer);
+        };
       }
-      // Cleanup function to remove the event listener
-      return () => {
-        if (currEl) currEl.removeEventListener("mousemove", stopPropagation);
-      };
     }
     if (refIndex !== 0 && refIndex <= 3) {
       const prevEl = refArray[refIndex - 1].current;
@@ -80,36 +88,44 @@ export default function Hero() {
         prevEl.onmousemove = null;
         currEl.addEventListener("mousemove", stopPropagation);
 
-        // handling iterating z-index and display
-        //for the rest of the portals
-        prevEl.style.zIndex = "1";
-        prevEl.style.display = "block";
-        prevEl.style.cursor = "default";
-        currEl.style.zIndex = "2";
-        currEl.style.display = "block";
-        currEl.style.cursor = "pointer";
-
-        refArray.forEach((ref, index) => {
-          if (ref.current !== currEl && ref.current !== prevEl && ref.current) {
-            ref.current.style.zIndex = "0";
-            ref.current.style.display = "none";
-            ref.current.style.clipPath = `path(" M${innerWidth / 2 - 1} ${
-              innerHeight / 2 - 1
-            } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${
-              innerWidth / 2 + 1
-            } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
-              innerHeight / 2 + 1
-            } Z")`;
-            ref.current.style.opacity = "0";
-            const dispatch = dispatchArray[index];
-            dispatch(false);
-          }
-        });
+        const timer = setTimeout(() => {
+          // handling iterating z-index and display
+          //for the rest of the portals
+          prevEl.style.zIndex = "1";
+          prevEl.style.display = "block";
+          prevEl.style.cursor = "default";
+          currEl.style.zIndex = "2";
+          currEl.style.display = "block";
+          currEl.style.cursor = "pointer";
+          refArray.forEach((ref, index) => {
+            if (
+              ref.current !== currEl &&
+              ref.current !== prevEl &&
+              ref.current
+            ) {
+              gsap.set(ref.current, {
+                "clip-path": `path(" M${innerWidth / 2 - 1} ${
+                  innerHeight / 2 - 1
+                } L${innerWidth / 2 + 1} ${innerHeight / 2 - 1} L${
+                  innerWidth / 2 + 1
+                } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
+                  innerHeight / 2 + 1
+                } Z")`,
+                opacity: "0",
+                display: "none",
+                zIndex: "0",
+              });
+              const dispatch = dispatchArray[index];
+              dispatch(false);
+            }
+          });
+        }, 1000);
+        // Cleanup function to remove the event listener
+        return () => {
+          currEl.removeEventListener("mousemove", stopPropagation);
+          clearTimeout(timer);
+        };
       }
-      // Cleanup function to remove the event listener
-      return () => {
-        if (currEl) currEl.removeEventListener("mousemove", stopPropagation);
-      };
     }
   }, [refIndex]);
   // Arrays
@@ -122,6 +138,9 @@ export default function Hero() {
     setPortalOpen4,
   ];
   //animation declation
+  gsap.defaults({
+    force3D: true,
+  });
   ///3d tilt animation
   const tl = gsap.timeline({
     defaults: {
