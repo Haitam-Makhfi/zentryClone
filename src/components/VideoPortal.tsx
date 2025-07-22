@@ -30,15 +30,14 @@ export default function VideoPortal({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [portalOpen, refIndex, setPortalOpen, setRefIndex, setPortalIndex] =
     state;
-  // const [tl3] = tls;
-  const [clearTimerPortal] = funcs;
-  const { innerWidth, innerHeight } = window;
   useEffect(() => {
     if (refIndex === 3) {
       videoRef.current!.pause();
       videoRef.current!.currentTime = 0;
     }
   }, [refIndex]);
+  const [clearTimerPortal] = funcs;
+  const { innerWidth, innerHeight } = window;
   return (
     <div
       id="video-portal"

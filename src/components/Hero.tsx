@@ -22,24 +22,16 @@ export default function Hero() {
   const [portalIndex, setPortalIndex] = useState<number>(1);
   useEffect(() => {
     titleRef.current !== null && rotatationTextAnimation(titleRef.current);
-    console.log(refIndex, portalRef1);
+    console.log(refIndex);
     if (portalIndex == 4 || refIndex == 4) {
       setPortalOpen1(false);
       setRefIndex(0);
       setPortalIndex(0);
     }
-  }, [portalIndex, portalOpen1, refIndex]);
+  }, [portalIndex, refIndex]);
   useLayoutEffect(() => {
     //handling on MouseMove event
-    if (
-      refArray[refIndex] == null ||
-      refArray[3] == null ||
-      refArray[refIndex - 1] == null ||
-      refIndex === 4
-    ) {
-      console.log("ref is not defined");
-      return;
-    }
+    if (refIndex === 4) return;
     if (refIndex === 0) {
       const prevEl = refArray[3].current;
       const currEl = refArray[0].current;
@@ -56,7 +48,7 @@ export default function Hero() {
         currEl.style.zIndex = "2";
         currEl.style.display = "block";
         currEl.style.cursor = "pointer";
-        refArray.forEach((ref) => {
+        refArray.forEach((ref, index) => {
           if (ref.current !== currEl && ref.current !== prevEl && ref.current) {
             ref.current.style.zIndex = "0";
             ref.current.style.display = "none";
@@ -68,6 +60,8 @@ export default function Hero() {
               innerHeight / 2 + 1
             } Z")`;
             ref.current.style.opacity = "0";
+            const dispatch = dispatchArray[index];
+            dispatch(false);
           }
         });
       }
@@ -77,10 +71,8 @@ export default function Hero() {
       };
     }
     if (refIndex !== 0 && refIndex <= 3) {
-      const prevEl = refArray[refIndex - 1]
-        ? refArray[refIndex - 1].current
-        : null;
-      const currEl = refArray[refIndex] ? refArray[refIndex].current : null;
+      const prevEl = refArray[refIndex - 1].current;
+      const currEl = refArray[refIndex].current;
 
       const stopPropagation = (e: MouseEvent) => e.stopPropagation();
 
@@ -97,7 +89,7 @@ export default function Hero() {
         currEl.style.display = "block";
         currEl.style.cursor = "pointer";
 
-        refArray.forEach((ref) => {
+        refArray.forEach((ref, index) => {
           if (ref.current !== currEl && ref.current !== prevEl && ref.current) {
             ref.current.style.zIndex = "0";
             ref.current.style.display = "none";
@@ -109,6 +101,8 @@ export default function Hero() {
               innerHeight / 2 + 1
             } Z")`;
             ref.current.style.opacity = "0";
+            const dispatch = dispatchArray[index];
+            dispatch(false);
           }
         });
       }
@@ -121,6 +115,12 @@ export default function Hero() {
   // Arrays
   const refArray = [portalRef1, portalRef2, portalRef3, portalRef4];
   const portalArray = [portalOpen1, portalOpen2, portalOpen3, portalOpen4];
+  const dispatchArray = [
+    setPortalOpen1,
+    setPortalOpen2,
+    setPortalOpen3,
+    setPortalOpen4,
+  ];
   //animation declation
   ///3d tilt animation
   const tl = gsap.timeline({
@@ -146,21 +146,22 @@ export default function Hero() {
   //functions
   const clearTimerPortal = () => {
     clearTimeout(timer);
-    !portalArray[portalIndex] && !(refIndex == 4)
-      ? tl3.to(refArray[refIndex].current, {
-          "clip-path": `path(" M${innerWidth / 2 - 100} ${
-            innerHeight / 2 - 100
-          } L${innerWidth / 2 + 100} ${innerHeight / 2 - 100} L${
-            innerWidth / 2 + 100
-          } ${innerHeight / 2 + 100} L${innerWidth / 2 - 100} ${
-            innerHeight / 2 + 100
-          } Z")`,
-          duration: 1,
-          ease: "power1.inOut",
-          yoyo: true,
-          repeat: -1,
-        })
-      : null;
+    if (!portalArray[portalIndex] && !(refIndex == 4)) {
+      // tl2.resume();
+      tl3.to(refArray[refIndex].current, {
+        "clip-path": `path(" M${innerWidth / 2 - 100} ${
+          innerHeight / 2 - 100
+        } L${innerWidth / 2 + 100} ${innerHeight / 2 - 100} L${
+          innerWidth / 2 + 100
+        } ${innerHeight / 2 + 100} L${innerWidth / 2 - 100} ${
+          innerHeight / 2 + 100
+        } Z")`,
+        duration: 1,
+        ease: "power1.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    }
   };
   return (
     <section
@@ -319,6 +320,7 @@ export default function Hero() {
           bottomLeftX = innerWidth / 2 - 75 + dx * maxOffset;
           bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset;
         } else if (dx < 0.2 && dx > -0.2 && dy < 0.2 && dy > -0.2) {
+          //center
           topLeftX = innerWidth / 2 - 75 + dx * maxOffset;
           topLeftY = innerHeight / 2 - 75 + dy * maxOffset;
 
@@ -389,7 +391,13 @@ export default function Hero() {
           portalRef2={portalRef2}
           funcs={[clearTimerPortal]}
           tls={[tl, tl2, tl3]}
-          state={[portalOpen2, setPortalOpen2, setRefIndex, setPortalIndex]}
+          state={[
+            portalOpen2,
+            refIndex,
+            setPortalOpen2,
+            setRefIndex,
+            setPortalIndex,
+          ]}
           style={{
             clipPath: `path(" M${innerWidth / 2 - 1} ${innerHeight / 2 - 1} L${
               innerWidth / 2 + 1
@@ -402,7 +410,13 @@ export default function Hero() {
           portalRef3={portalRef3}
           funcs={[clearTimerPortal]}
           tls={[tl, tl2, tl3]}
-          state={[portalOpen3, setPortalOpen3, setRefIndex, setPortalIndex]}
+          state={[
+            portalOpen3,
+            refIndex,
+            setPortalOpen3,
+            setRefIndex,
+            setPortalIndex,
+          ]}
           style={{
             clipPath: `path(" M${innerWidth / 2 - 1} ${innerHeight / 2 - 1} L${
               innerWidth / 2 + 1
@@ -415,7 +429,13 @@ export default function Hero() {
           portalRef4={portalRef4}
           funcs={[clearTimerPortal]}
           tls={[tl, tl2, tl3]}
-          state={[portalOpen4, setPortalOpen4, setRefIndex, setPortalIndex]}
+          state={[
+            portalOpen4,
+            refIndex,
+            setPortalOpen4,
+            setRefIndex,
+            setPortalIndex,
+          ]}
           style={{
             clipPath: `path(" M${innerWidth / 2 - 1} ${innerHeight / 2 - 1} L${
               innerWidth / 2 + 1

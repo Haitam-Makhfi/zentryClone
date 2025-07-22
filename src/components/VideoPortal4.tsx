@@ -3,6 +3,7 @@ import {
   type Dispatch,
   type SetStateAction,
   useRef,
+  useEffect,
   type HTMLAttributes,
 } from "react";
 import gsap from "gsap";
@@ -13,6 +14,7 @@ interface videoPortalProps extends HTMLAttributes<HTMLDivElement> {
   tls: GSAPTimeline[];
   state: [
     portalOpen: boolean,
+    refIndex: number,
     setPortalOpen: Dispatch<SetStateAction<boolean>>,
     setRefIndex: Dispatch<SetStateAction<number>>,
     setPortalIndex: Dispatch<SetStateAction<number>>
@@ -26,9 +28,15 @@ export default function VideoPortal3({
   ...props
 }: videoPortalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  // const [tl3] = tls;
+  const [portalOpen, refIndex, setPortalOpen, setRefIndex, setPortalIndex] =
+    state;
+  useEffect(() => {
+    if (refIndex === 2) {
+      videoRef.current!.pause();
+      videoRef.current!.currentTime = 0;
+    }
+  }, [refIndex]);
   const [clearTimerPortal] = funcs;
-  const [portalOpen, setPortalOpen, setRefIndex, setPortalIndex] = state;
   const { innerWidth, innerHeight } = window;
   return (
     <div
