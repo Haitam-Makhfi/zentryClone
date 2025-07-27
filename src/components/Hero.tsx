@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import rotatationTextAnimation from "../Hooks/rotatationTextAnimation";
-import Nav from "./Nav";
 import VideoPortal from "./VideoPortal";
 import VideoPortal2 from "./VideoPortal2";
 import VideoPortal3 from "./VideoPortal3";
@@ -389,7 +388,6 @@ export default function Hero() {
         setTimer(timerVar);
       }}
     >
-      <Nav />
       <div id="slides" className="absolute inset-0">
         <VideoPortal
           portalRef1={portalRef1}
