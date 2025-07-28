@@ -24,13 +24,6 @@ export default function Button({
 
   // Initial clipPath for the button
   gsap.registerPlugin(MorphSVGPlugin);
-  //   useGSAP(
-  //     () => {
-  //       if (!buttonRef.current || !textRef1.current || !textRef2.current)
-  //         return null;
-  //     },
-  //     { scope: buttonRef }
-  //   );
   const { contextSafe } = useGSAP({ scope: buttonRef });
   const onMouseEnter = contextSafe(() => {
     if (!buttonRef.current || !textRef1.current || !textRef2.current)
@@ -48,7 +41,7 @@ export default function Button({
     gsap.to("#btn-bg", {
       //120 36
       morphSVG:
-        "M 5 0 L 115 4 A 1 1 0 0 1 120 6 L120 34 A 1 1 0 0 1 115 36 L5 36 A 1 1 0 0 1 0 34 L 0 2 A 1 1 0 0 1 5 0 Z",
+        "M 30 3 L 90 4 Q 98 6 ,96 20 L 96 26 Q 98 34,90 36 L 30 36 Q 22 34,24 26 L24 17 Q 22 1,30 3 Z",
       duration: 0.3,
     });
   });
@@ -69,10 +62,6 @@ export default function Button({
       morphSVG: "M 30 3 L 90 3 A 5 5 0 0 1 90 33 L 30 33 A 5 5 0 0 1 30 3 Z",
       duration: 0.3,
     });
-    // gsap.to(buttonRef.current, {
-    //   clipPath: `path('M${x10} ${y25} L${x90} ${y25} A 7 7 0 0 1 ${x90} ${y75} L${x10} ${y75} A 7 7 0 0 1 ${x10} ${y25} Z')`,
-    //   duration: 0.3,
-    // });
   });
 
   return (
