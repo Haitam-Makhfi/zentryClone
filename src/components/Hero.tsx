@@ -8,6 +8,7 @@ import VideoPortal2 from "./VideoPortal2";
 import VideoPortal3 from "./VideoPortal3";
 import VideoPortal4 from "./VideoPortal4";
 import Button from "./Button";
+import { useGSAP } from "@gsap/react";
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const portalRef1 = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ export default function Hero() {
     titleRef.current !== null && rotatationTextAnimation(titleRef.current);
   }, []);
   useLayoutEffect(() => {
-    //handling on MouseMove event
+    //handling on MouseMove event so that the top portal dont close when the mouse is over it
     if (refIndex === 0) {
       const prevEl = refArray[3].current;
       const currEl = refArray[0].current;
@@ -145,6 +146,19 @@ export default function Hero() {
     force3D: true,
   });
   ///3d tilt animation
+  useGSAP(() => {
+    gsap.fromTo(
+      "#sub-title-content",
+      {
+        y: 100,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+      }
+    );
+  });
   const tl = gsap.timeline({
     defaults: {
       force3D: true,
