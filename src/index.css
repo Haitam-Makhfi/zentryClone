@@ -43,6 +43,9 @@ h1 div {
   src: url("assets/fonts/zentry-regular.woff2") format("woff2");
 }
 @layer base {
+  p {
+    @apply capitalize;
+  }
   #buttons button {
     @apply text-center w-18;
   }
@@ -52,4 +55,5 @@ h1 div {
   --font-general: "general", sans-serif;
   --font-robert-medium: "robert-medium", sans-serif;
   --font-robert-regular: "robert-regular", sans-serif;
+  --color-primary: #dfdff0;
 }

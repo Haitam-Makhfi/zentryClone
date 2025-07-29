@@ -1,10 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import rotatationTextAnimation from "../Hooks/rotatationTextAnimation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import VideoPortal from "./VideoPortal";
 import VideoPortal2 from "./VideoPortal2";
 import VideoPortal3 from "./VideoPortal3";
 import VideoPortal4 from "./VideoPortal4";
+import Button from "./Button";
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const portalRef1 = useRef<HTMLDivElement>(null);
@@ -20,14 +23,15 @@ export default function Hero() {
   const [refIndex, setRefIndex] = useState<number>(1);
   const [portalIndex, setPortalIndex] = useState<number>(1);
   useEffect(() => {
-    titleRef.current !== null && rotatationTextAnimation(titleRef.current);
-    console.log(refIndex);
     if (portalIndex == 4 || refIndex == 4) {
       setPortalOpen1(false);
       setRefIndex(0);
       setPortalIndex(0);
     }
   }, [portalIndex, refIndex]);
+  useLayoutEffect(() => {
+    titleRef.current !== null && rotatationTextAnimation(titleRef.current);
+  }, []);
   useLayoutEffect(() => {
     //handling on MouseMove event
     if (refIndex === 0) {
@@ -388,6 +392,30 @@ export default function Hero() {
         setTimer(timerVar);
       }}
     >
+      <div
+        id="hero-content"
+        className="absolute top-10 left-10 z-3 font-robert-medium text-primary"
+      >
+        <h1
+          className="w-[fit-content] text-primary font-zentry text-center text-[11rem] uppercase  origin-center cursor-pointer"
+          ref={titleRef}
+        >
+          redefine
+        </h1>
+        <div id="sub-title-content" className="absolute top-[80%] left-0 ">
+          <p>enter the meta game</p>
+          <p>unleash the play economy</p>
+          <Button
+            width={220}
+            textColor="black"
+            bgColor="yellow"
+            className="text-[10px] font-regular mt-3 absolute -left-12"
+          >
+            <FontAwesomeIcon icon={faCaretRight} className="mr-1" />
+            whatch trailer
+          </Button>
+        </div>
+      </div>
       <div id="slides" className="absolute inset-0">
         <VideoPortal
           portalRef1={portalRef1}
@@ -464,13 +492,4 @@ export default function Hero() {
       </div>
     </section>
   );
-}
-
-{
-  /* <h1
-  className="w-[fit-content] text-center text-4xl font-bold mt-15 mx-auto uppercase  origin-center "
-  ref={titleRef}
->
-  gaming
-</h1> */
 }

@@ -1,15 +1,18 @@
+import type { HTMLAttributes } from "react";
 import { useRef, type PropsWithChildren } from "react";
 import gsap from "gsap";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 import { useGSAP } from "@gsap/react";
 
-interface ButtonProps {
+interface ButtonProps extends HTMLAttributes<HTMLDivElement> {
+  width?: number;
   textColor?: "white" | "black" | "yellow";
-  bgColor?: "white" | "black" | "yellow" | "transparent";
+  bgColor?: "primary" | "black" | "yellow" | "transparent";
 }
 export default function Button({
+  width = 120,
   textColor = "black",
-  bgColor = "white",
+  bgColor = "primary",
   children,
   ...props
 }: PropsWithChildren<ButtonProps>) {
@@ -18,10 +21,17 @@ export default function Button({
   const textRef2 = useRef<HTMLSpanElement>(null);
   const textColorObject = {
     black: "text-black",
-    white: "text-white",
+    white: "text-[#dfdff0]",
     yellow: "text-yellow",
   };
-
+  const bgColorObject = {
+    black: "fill-black",
+    primary: "fill-[#dfdff0]",
+    yellow: "fill-yellow-200",
+    transparent: "fill-transparent",
+  };
+  let start = width / 3.8;
+  let end = width - start;
   // Initial clipPath for the button
   gsap.registerPlugin(MorphSVGPlugin);
   const { contextSafe } = useGSAP({ scope: buttonRef });
@@ -40,8 +50,11 @@ export default function Button({
     });
     gsap.to("#btn-bg", {
       //120 36
-      morphSVG:
-        "M 30 3 L 90 4 Q 98 6 ,96 20 L 96 26 Q 98 34,90 36 L 30 36 Q 22 34,24 26 L24 17 Q 22 1,30 3 Z",
+      morphSVG: `M ${start} 3 L ${end} 4 Q ${end + 8} 6 ,${end + 6} 20 L ${
+        end + 6
+      } 16 Q ${end + 8} 34,${end} 36 L ${start} 36 Q ${start - 8} 34,${
+        start - 6
+      } 15 L ${start - 6} 15 Q ${start - 8} 1,${start} 3 Z`,
       duration: 0.3,
     });
   });
@@ -59,7 +72,7 @@ export default function Button({
     });
     gsap.to("#btn-bg", {
       // Add the reverse morphSVG animation
-      morphSVG: "M 30 3 L 90 3 A 5 5 0 0 1 90 33 L 30 33 A 5 5 0 0 1 30 3 Z",
+      morphSVG: `M ${start} 3 L ${end} 3 A 5 5 0 0 1 ${end} 33 L ${start} 33 A 5 5 0 0 1 ${start} 3 Z`,
       duration: 0.3,
     });
   });
@@ -68,30 +81,34 @@ export default function Button({
     <>
       <div
         ref={buttonRef}
-        className="w-30 h-9 relative cursor-pointer"
+        style={{
+          width: `${width}px`,
+          height: "36px",
+          position: "relative",
+          cursor: "pointer",
+        }}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         {...props}
       >
         <svg
-          viewBox="0 0 120 36"
-          className="absolute"
+          viewBox={`0 0 ${width} 36`}
+          className={`absolute ${bgColorObject[bgColor]}`}
           width="100%"
           height="100%"
-          fill={bgColor}
         >
           <path
             id="btn-bg"
-            d={`M 30 3 L 90 3 A 5 5 0 0 1 90 33 L 30 33 A 5 5 0 0 1 30 3 Z`}
+            d={`M ${start} 3 L ${end} 3 A 5 5 0 0 1 ${end} 33 L ${start} 33 A 5 5 0 0 1 ${start} 3 Z`}
           ></path>
         </svg>
         <div
           id="btn-txt"
-          className=" absolute top-1/2 left-1/2 -translate-1/2 flex flex-col items-center justify-between w-full h-full"
+          className="font-general font-bold uppercase absolute top-1/2 left-1/2 -translate-1/2 flex flex-col items-center justify-between w-full h-full"
         >
           <span
             ref={textRef1}
-            className="absolute top-1/2 left-1/2 -translate-1/2"
+            className={`${textColorObject[textColor]} absolute top-1/2 left-1/2 -translate-1/2`}
           >
             {children}
           </span>

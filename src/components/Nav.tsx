@@ -15,32 +15,32 @@ export default function Nav() {
     gsap.to("#right-nav-bg", {
       x,
       opacity: 1,
-      duration: 0.2,
+      duration: 0.5,
     });
     gsap.to(e.target, {
       color: "black",
-      duration: 0.2,
+      duration: 0.5,
     });
   });
   const mouseLeave = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
     gsap.to(e.target, {
       color: "white",
-      duration: 0.2,
+      duration: 0.5,
     });
     gsap.to("#right-nav-bg", {
       opacity: 0,
-      duration: 0.2,
+      duration: 0.5,
     });
   });
   const mouseLeaveParent = contextSafe(
     (e: React.MouseEvent<HTMLDivElement>) => {
       gsap.to(e.target, {
         color: "white",
-        duration: 0.2,
+        duration: 0.5,
       });
       gsap.to("#right-nav-bg", {
         opacity: 0,
-        duration: 0.2,
+        duration: 0.5,
       });
     }
   );
@@ -49,13 +49,10 @@ export default function Nav() {
       className=" font-general text-[10px] text-white uppercase flex w-full justify-between pr-10 mt-2 font-bold fixed z-10 "
       ref={navRef}
     >
-      <div
-        id="left-nav"
-        className="flex items-center gap-2 text-[10px] text-black"
-      >
+      <div id="left-nav" className="flex items-center gap-2 text-black">
         <img src={logo} alt="logo" className="w-15" />
         <Button>PRODUCTS</Button>
-        <Button>WHITEPAPER</Button>
+        <Button width={130}>WHITEPAPER</Button>
       </div>
       <div id="right-nav" className="flex relative">
         <div
