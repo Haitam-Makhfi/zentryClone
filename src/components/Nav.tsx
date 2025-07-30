@@ -1,10 +1,11 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import logo from "../imgs/logo.png";
 import Button from "./Button";
 export default function Nav() {
   const navRef = useRef<HTMLDivElement>(null);
+  const [target, setTarget] = useState<HTMLElement | null>(null);
   const { contextSafe } = useGSAP({ scope: navRef && navRef });
   const mouseEnter = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
     if (!e.currentTarget) return null;
@@ -15,35 +16,27 @@ export default function Nav() {
     gsap.to("#right-nav-bg", {
       x,
       opacity: 1,
-      duration: 0.5,
+      duration: 0.2,
     });
-    gsap.to(e.target, {
+    gsap.set(e.target, {
       color: "black",
-      duration: 0.5,
     });
+    setTarget(e.currentTarget);
   });
   const mouseLeave = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
-    gsap.to(e.target, {
+    gsap.set(e.target, {
       color: "white",
-      duration: 0.5,
+    });
+  });
+  const mouseLeaveParent = contextSafe(() => {
+    gsap.set(target, {
+      color: "white",
     });
     gsap.to("#right-nav-bg", {
       opacity: 0,
       duration: 0.5,
     });
   });
-  const mouseLeaveParent = contextSafe(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      gsap.to(e.target, {
-        color: "white",
-        duration: 0.5,
-      });
-      gsap.to("#right-nav-bg", {
-        opacity: 0,
-        duration: 0.5,
-      });
-    }
-  );
   return (
     <nav
       className=" font-general text-[10px] text-white uppercase flex w-full justify-between pr-10 mt-2 font-bold fixed z-10 "
@@ -55,41 +48,37 @@ export default function Nav() {
         <Button width={130}>WHITEPAPER</Button>
       </div>
       <div id="right-nav" className="flex relative">
-        <div
-          id="buttons"
-          className="flex gap-5"
-          onMouseLeave={mouseLeaveParent}
-        >
+        <div id="buttons" className="flex" onMouseLeave={mouseLeaveParent}>
           <button
-            className="cursor-pointer"
+            className="w-22 text-center cursor-pointer"
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
           >
             NEXUS
           </button>
           <button
-            className="cursor-pointer"
+            className="w-22 text-center cursor-pointer"
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
           >
             VAULT
           </button>
           <button
-            className="cursor-pointer"
+            className="w-22 text-center cursor-pointer"
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
           >
-            PROLOGUE
+            PRLOGUE
           </button>
           <button
-            className="cursor-pointer"
+            className="w-22 text-center cursor-pointer"
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
           >
             ABOUT
           </button>
           <button
-            className="cursor-pointer"
+            className="w-22 text-center cursor-pointer"
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
           >
@@ -97,7 +86,7 @@ export default function Nav() {
           </button>
           <div
             id="right-nav-bg"
-            className="w-18 h-8 bg-white absolute top-1/2 -translate-y-1/2 left-0 z-[-1] rounded-full opacity-0"
+            className="w-22 h-8 bg-primary absolute top-1/2 -translate-y-1/2 left-0 z-[-1] rounded-full opacity-0"
           ></div>
         </div>
         <span id="audioIcon"></span>
