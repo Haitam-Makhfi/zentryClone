@@ -219,7 +219,7 @@ export default function Hero() {
   const clearTimerPortal = () => {
     clearTimeout(timer);
     if (!portalArray[portalIndex] && !(refIndex == 4)) {
-      // tl2.resume();
+      tl3.resume();
       tl3.to(refArray[refIndex].current, {
         "clip-path": `path(" M${innerWidth / 2 - 100} ${
           innerHeight / 2 - 100
@@ -411,7 +411,7 @@ export default function Hero() {
           const newPath = `path("M ${topLeftX} ${topLeftY} L ${topRightX} ${topRightY} L ${bottomRightX} ${bottomRightY} L ${bottomLeftX} ${bottomLeftY} Z")`;
           // console.log(getComputedStyle(boxRef.current!).clipPath);
           //animation
-          tl3.revert();
+          tl3.pause();
           tl2.pause();
           tl.resume();
           tl.set(refArray[refIndex].current, {
