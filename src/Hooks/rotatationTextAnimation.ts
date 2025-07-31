@@ -9,7 +9,8 @@ export default function rotatationTextAnimation(
   reverse: boolean = false,
   animationDuration: number = 1,
   opacityDuration: number = 0.5
-): gsap.core.Timeline {
+): GSAPTimeline | void {
+  if (!element) return;
   const textAnimationTl = gsap.timeline();
   let split = SplitText.create(element, {
     type: "chars",
@@ -46,7 +47,19 @@ export default function rotatationTextAnimation(
       },
       "<"
     );
+    textAnimationTl.set(
+      element,
+      {
+        display: "none",
+        visibility: "hidden",
+      },
+      ">"
+    );
   } else {
+    textAnimationTl.set(element, {
+      display: "block",
+      visibility: "visible",
+    });
     textAnimationTl.fromTo(
       element,
       {
@@ -63,7 +76,9 @@ export default function rotatationTextAnimation(
     );
     textAnimationTl.fromTo(
       split.chars,
-      { opacity: 0 },
+      {
+        opacity: 0,
+      },
       {
         stagger: 0.05,
         opacity: 1,
@@ -73,5 +88,4 @@ export default function rotatationTextAnimation(
       "0.20"
     );
   }
-  return textAnimationTl;
 }

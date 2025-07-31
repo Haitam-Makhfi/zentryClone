@@ -15,6 +15,10 @@ export default function Hero() {
   const portalRef2 = useRef<HTMLDivElement>(null);
   const portalRef3 = useRef<HTMLDivElement>(null);
   const portalRef4 = useRef<HTMLDivElement>(null);
+  const portalTitleRef1 = useRef<HTMLDivElement>(null);
+  const portalTitleRef2 = useRef<HTMLDivElement>(null);
+  const portalTitleRef3 = useRef<HTMLDivElement>(null);
+  const portalTitleRef4 = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout>>();
   const [portalOpen1, setPortalOpen1] = useState<boolean>(true);
@@ -23,6 +27,38 @@ export default function Hero() {
   const [portalOpen4, setPortalOpen4] = useState<boolean>(false);
   const [refIndex, setRefIndex] = useState<number>(1);
   const [portalIndex, setPortalIndex] = useState<number>(1);
+  useLayoutEffect(() => {
+    titleRef.current && rotatationTextAnimation(titleRef.current);
+    const el = document.getElementById("portal-titles")!
+      .firstChild as HTMLElement;
+    rotatationTextAnimation(el);
+  }, []);
+  useGSAP(
+    () => {
+      if (refIndex == 4) return null;
+      //animating out the previous title
+      let prev: HTMLElement | null = null;
+      if (refIndex === 1) prev = titleArray[3].current;
+      if (refIndex == 2) prev = titleArray[0].current;
+      if (refIndex == 3) prev = titleArray[1].current;
+      if (refIndex == 0) prev = titleArray[2].current;
+      prev && rotatationTextAnimation(prev as HTMLElement, -90, 90, true);
+      //animating the current portal title
+      const timer = setTimeout(() => {
+        console.log("fired");
+        let curr: HTMLElement | null = null;
+        // if (refIndex == 1) curr = titleArray[0].current;
+        if (refIndex == 2) curr = titleArray[1].current;
+        if (refIndex == 3) curr = titleArray[2].current;
+        if (refIndex == 0) curr = titleArray[3].current;
+        curr && rotatationTextAnimation(curr);
+      }, 600);
+      return () => {
+        clearTimeout(timer);
+      };
+    },
+    { dependencies: [refIndex] }
+  );
   useEffect(() => {
     if (portalIndex == 4 || refIndex == 4) {
       setPortalOpen1(false);
@@ -30,41 +66,6 @@ export default function Hero() {
       setPortalIndex(0);
     }
   }, [portalIndex, refIndex]);
-  useLayoutEffect(() => {
-    titleRef.current && rotatationTextAnimation(titleRef.current);
-    const el = document.getElementById("portal-titles")!
-      .firstChild as HTMLElement;
-    rotatationTextAnimation(el);
-    // const el = document.getElementById("portal-titles")!.firstChild;
-    // rotatationTextAnimation(el as HTMLElement);
-  }, []);
-  useLayoutEffect(() => {
-    const container = document.getElementById("portal-titles");
-    if (!container) return;
-
-    let prev: HTMLElement | null = null;
-    if (refIndex === 0) {
-      prev = container.lastChild as HTMLElement;
-    } else if (refIndex === 2) {
-      prev = container.firstChild as HTMLElement;
-    } else if (refIndex > 2) {
-      prev = document.getElementById(`portal-title-${refIndex - 1}`);
-    }
-    prev && rotatationTextAnimation(prev as HTMLElement, -90, 90, true);
-    //animating the current portal title
-    const timer = setTimeout(() => {
-      let curr: HTMLElement | null = null;
-      if (refIndex === 0) {
-        curr = container.lastChild as HTMLElement;
-      } else if (refIndex >= 2) {
-        curr = document.getElementById(`portal-title-${refIndex}`);
-      }
-      curr && rotatationTextAnimation(curr);
-    }, 1300);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [refIndex]);
   useLayoutEffect(() => {
     //handling on MouseMove event so that the top portal dont close when the mouse is over it
     if (refIndex === 0) {
@@ -189,6 +190,12 @@ export default function Hero() {
     setPortalOpen2,
     setPortalOpen3,
     setPortalOpen4,
+  ];
+  const titleArray = [
+    portalTitleRef1,
+    portalTitleRef2,
+    portalTitleRef3,
+    portalTitleRef4,
   ];
   //animation declation
   gsap.defaults({
@@ -553,10 +560,18 @@ export default function Hero() {
           id="portal-titles"
           className=" absolute top-[65%] right-10 z-3 w-[fit-content] text-primary font-zentry text-center text-[10rem] uppercase origin center cursor-default"
         >
-          <h2 id="portal-title-1">gaming</h2>
-          <h2 id="portal-title-2">identity</h2>
-          <h2 id="portal-title-3">reality</h2>
-          <h2 id="portal-title-4">agentic</h2>
+          <h2 id="portal-title-1" className="invisible" ref={portalTitleRef1}>
+            gaming
+          </h2>
+          <h2 id="portal-title-2" className="invisible" ref={portalTitleRef2}>
+            identity
+          </h2>
+          <h2 id="portal-title-3" className="invisible" ref={portalTitleRef3}>
+            reality
+          </h2>
+          <h2 id="portal-title-4" className="invisible" ref={portalTitleRef4}>
+            agentic
+          </h2>
         </div>
       </section>
     </div>
