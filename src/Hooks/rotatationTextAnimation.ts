@@ -8,7 +8,7 @@ export default function rotatationTextAnimation(
   yValue: number = -90,
   reverse: boolean = false,
   animationDuration: number = 1,
-  opacityDuration: number = 0.5
+  opacityDuration: number = 0.1
 ): GSAPTimeline | void {
   if (!element) return;
   const textAnimationTl = gsap.timeline();
@@ -29,7 +29,7 @@ export default function rotatationTextAnimation(
       {
         rotationX: xValue,
         rotationY: yValue,
-        y: 60,
+        y: 45,
         x: 150,
         duration: animationDuration,
         ease: "power2.out",
@@ -42,7 +42,7 @@ export default function rotatationTextAnimation(
         stagger: 0.05,
         reversed: true,
         opacity: 0,
-        duration: opacityDuration - 0.3,
+        duration: opacityDuration,
         ease: "power2.out",
       },
       "<"

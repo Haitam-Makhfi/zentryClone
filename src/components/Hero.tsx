@@ -29,43 +29,44 @@ export default function Hero() {
   const [portalIndex, setPortalIndex] = useState<number>(1);
   useLayoutEffect(() => {
     titleRef.current && rotatationTextAnimation(titleRef.current);
-    const el = document.getElementById("portal-titles")!
-      .firstChild as HTMLElement;
-    rotatationTextAnimation(el);
+    // const el = document.getElementById("portal-titles")!
+    //   .firstChild as HTMLElement;
+    // rotatationTextAnimation(el);
   }, []);
-  useGSAP(
-    () => {
-      if (refIndex == 4) return null;
-      //animating out the previous title
-      let prev: HTMLElement | null = null;
-      if (refIndex === 1) prev = titleArray[3].current;
-      if (refIndex == 2) prev = titleArray[0].current;
-      if (refIndex == 3) prev = titleArray[1].current;
-      if (refIndex == 0) prev = titleArray[2].current;
-      prev && rotatationTextAnimation(prev as HTMLElement, -90, 90, true);
-      //animating the current portal title
-      const timer = setTimeout(() => {
-        console.log("fired");
-        let curr: HTMLElement | null = null;
-        // if (refIndex == 1) curr = titleArray[0].current;
-        if (refIndex == 2) curr = titleArray[1].current;
-        if (refIndex == 3) curr = titleArray[2].current;
-        if (refIndex == 0) curr = titleArray[3].current;
-        curr && rotatationTextAnimation(curr);
-      }, 600);
-      return () => {
-        clearTimeout(timer);
-      };
-    },
-    { dependencies: [refIndex] }
-  );
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (portalIndex == 4 || refIndex == 4) {
       setPortalOpen1(false);
       setRefIndex(0);
       setPortalIndex(0);
     }
   }, [portalIndex, refIndex]);
+  useGSAP(
+    () => {
+      console.log(refIndex);
+      if (refIndex === 4) return null;
+      //animating out the previous title
+      let prev: HTMLElement | null = null;
+      if (refIndex === 1) prev = titleArray[3].current;
+      if (refIndex === 2) prev = titleArray[0].current;
+      if (refIndex === 3) prev = titleArray[1].current;
+      if (refIndex === 0) prev = titleArray[2].current;
+      prev && rotatationTextAnimation(prev as HTMLElement, -90, 90, true);
+      //animating the current portal title
+      const timer = setTimeout(() => {
+        let curr: HTMLElement | null = null;
+        if (refIndex === 1) curr = titleArray[0].current;
+        if (refIndex === 2) curr = titleArray[1].current;
+        if (refIndex === 3) curr = titleArray[2].current;
+        if (refIndex === 0) curr = titleArray[3].current;
+        curr && rotatationTextAnimation(curr);
+      }, 600);
+      return () => {
+        console.log("fired");
+        clearTimeout(timer);
+      };
+    },
+    { dependencies: [refIndex] }
+  );
   useLayoutEffect(() => {
     //handling on MouseMove event so that the top portal dont close when the mouse is over it
     if (refIndex === 0) {
