@@ -27,13 +27,16 @@ export default function Hero() {
   const [portalOpen4, setPortalOpen4] = useState<boolean>(false);
   const [refIndex, setRefIndex] = useState<number>(1);
   const [portalIndex, setPortalIndex] = useState<number>(1);
-  useLayoutEffect(() => {
-    titleRef.current && rotatationTextAnimation(titleRef.current);
+  const [payload, setPayLoad] = useState<[GSAPTimeline, SplitText] | []>([]);
+
+  useGSAP(() => {
+    // const tl = gsap.timeline();
+    titleRef.current && rotatationTextAnimation(titleRef.current, null, null);
     // const el = document.getElementById("portal-titles")!
     //   .firstChild as HTMLElement;
     // rotatationTextAnimation(el);
-  }, []);
-  useLayoutEffect(() => {
+  });
+  useEffect(() => {
     if (portalIndex == 4 || refIndex == 4) {
       setPortalOpen1(false);
       setRefIndex(0);
@@ -42,15 +45,19 @@ export default function Hero() {
   }, [portalIndex, refIndex]);
   useGSAP(
     () => {
-      console.log(refIndex);
       if (refIndex === 4) return null;
+      console.log(refIndex);
       //animating out the previous title
       let prev: HTMLElement | null = null;
       if (refIndex === 1) prev = titleArray[3].current;
       if (refIndex === 2) prev = titleArray[0].current;
       if (refIndex === 3) prev = titleArray[1].current;
       if (refIndex === 0) prev = titleArray[2].current;
-      prev && rotatationTextAnimation(prev as HTMLElement, -90, 90, true);
+      const [tl, split] = payload;
+      prev &&
+        tl &&
+        split &&
+        rotatationTextAnimation(prev as HTMLElement, tl, split, -90, 90, true);
       //animating the current portal title
       const timer = setTimeout(() => {
         let curr: HTMLElement | null = null;
@@ -58,14 +65,14 @@ export default function Hero() {
         if (refIndex === 2) curr = titleArray[1].current;
         if (refIndex === 3) curr = titleArray[2].current;
         if (refIndex === 0) curr = titleArray[3].current;
-        curr && rotatationTextAnimation(curr);
+        const payloadSetter = curr && rotatationTextAnimation(curr, null, null);
+        payloadSetter && setPayLoad(payloadSetter);
       }, 600);
       return () => {
-        console.log("fired");
         clearTimeout(timer);
       };
     },
-    { dependencies: [refIndex] }
+    { scope: "#hero", dependencies: [refIndex] }
   );
   useLayoutEffect(() => {
     //handling on MouseMove event so that the top portal dont close when the mouse is over it
@@ -458,7 +465,7 @@ export default function Hero() {
           className="absolute top-10 left-10 z-3 font-robert-medium text-primary"
         >
           <h1
-            className="w-[fit-content] text-primary font-zentry text-center text-[11rem] uppercase  origin-center cursor-default"
+            className="w-[fit-content] text-primary font-zentry text-center text-[11rem] uppercase cursor-default"
             ref={titleRef}
           >
             redefine

@@ -4,20 +4,19 @@ import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(SplitText);
 export default function rotatationTextAnimation(
   element: HTMLElement,
+  tl: GSAPTimeline | null,
+  splitRe: SplitText | null,
   xValue: number = 90,
   yValue: number = -90,
   reverse: boolean = false,
   animationDuration: number = 1,
   opacityDuration: number = 0.1
-): GSAPTimeline | void {
-  if (!element) return;
-  const textAnimationTl = gsap.timeline();
-  let split = SplitText.create(element, {
-    type: "chars",
-    charsClass: "split-char",
-  });
+): [tl: GSAPTimeline, split: SplitText] | void {
+  // if (!element) return;
   if (reverse) {
-    textAnimationTl.fromTo(
+    if (!splitRe) return;
+    if (!tl) return;
+    tl.fromTo(
       element,
       {
         transformPerspective: 600,
@@ -35,8 +34,8 @@ export default function rotatationTextAnimation(
         ease: "power2.out",
       }
     );
-    textAnimationTl.fromTo(
-      split.chars,
+    tl.fromTo(
+      splitRe.chars,
       { opacity: 1 },
       {
         stagger: 0.05,
@@ -47,20 +46,33 @@ export default function rotatationTextAnimation(
       },
       "<"
     );
-    textAnimationTl.set(
+    // Add cleanup callback at the end of the animation
+    tl.call(() => {
+      splitRe.revert();
+    });
+    tl.set(
       element,
       {
         display: "none",
         visibility: "hidden",
+        y: 0,
+        x: 0,
       },
       ">"
     );
   } else {
-    textAnimationTl.set(element, {
+    // if (!textAnimationTl) return;
+    const tl = gsap.timeline();
+    let split = SplitText.create(element, {
+      type: "chars",
+      charsClass: "split-char",
+    });
+    tl.set(element, {
       display: "block",
       visibility: "visible",
+      rotate: 0,
     });
-    textAnimationTl.fromTo(
+    tl.fromTo(
       element,
       {
         transformPerspective: 600,
@@ -74,7 +86,7 @@ export default function rotatationTextAnimation(
         ease: "power2.out",
       }
     );
-    textAnimationTl.fromTo(
+    tl.fromTo(
       split.chars,
       {
         opacity: 0,
@@ -85,7 +97,8 @@ export default function rotatationTextAnimation(
         duration: opacityDuration,
         ease: "power2.out",
       },
-      "0.20"
+      "<0.1"
     );
+    return [tl, split];
   }
 }
