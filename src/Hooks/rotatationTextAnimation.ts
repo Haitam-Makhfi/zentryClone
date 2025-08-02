@@ -61,7 +61,6 @@ export default function rotatationTextAnimation(
       ">"
     );
   } else {
-    // if (!textAnimationTl) return;
     const tl = gsap.timeline();
     let split = SplitText.create(element, {
       type: "chars",
@@ -92,7 +91,7 @@ export default function rotatationTextAnimation(
         opacity: 0,
       },
       {
-        stagger: 0.05,
+        stagger: 0.08,
         opacity: 1,
         duration: opacityDuration,
         ease: "power2.out",
