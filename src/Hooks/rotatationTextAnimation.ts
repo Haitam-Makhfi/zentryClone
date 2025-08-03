@@ -55,6 +55,8 @@ export default function rotatationTextAnimation(
       {
         display: "none",
         visibility: "hidden",
+        rotationX: 0,
+        rotationY: 0,
         y: 0,
         x: 0,
       },

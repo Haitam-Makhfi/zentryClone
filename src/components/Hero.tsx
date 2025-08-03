@@ -72,7 +72,7 @@ export default function Hero() {
         clearTimeout(timer);
       };
     },
-    { scope: "#hero", dependencies: [refIndex] }
+    { scope: heroRef, dependencies: [refIndex] }
   );
   useLayoutEffect(() => {
     //handling on MouseMove event so that the top portal dont close when the mouse is over it
@@ -174,8 +174,8 @@ export default function Hero() {
       }
     }
   }, [refIndex]);
-  //title animation
   useGSAP(() => {
+    //h1's sub-title animation
     gsap.fromTo(
       "#sub-title-content",
       {
@@ -189,6 +189,20 @@ export default function Hero() {
         ease: "power1.out",
       }
     );
+    //hero scroll animation
+    gsap.to(heroRef.current, {
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+      clipPath: `polygon(${innerWidth / 2 - innerWidth * 0.2}px 0px,${
+        innerWidth / 2 + innerWidth * 0.2
+      }px 0px,${innerWidth - innerWidth * 0.15}px ${
+        innerHeight - innerHeight * 0.15
+      }px,${innerWidth * 0.2}px ${innerHeight - innerHeight * 0.25}px)`,
+    });
   });
   // Arrays
   const refArray = [portalRef1, portalRef2, portalRef3, portalRef4];
@@ -251,11 +265,19 @@ export default function Hero() {
     }
   };
   return (
-    <div id="hero-wraper" className="w-full h-screen relative">
-      <section
+    <section
+      id="hero-wraper"
+      className="absolute inset-0 w-screen h-screen overflow-hidden m-0 p-0"
+    >
+      <div
         id="hero"
-        className="absolute w-full h-full overflow-hidden"
+        className="absolute inset-0 overflow-hidden w-full h-full"
         ref={heroRef}
+        style={{
+          clipPath: `polygon(0px 0px,${innerWidth}px 0px,${innerWidth}px ${innerHeight}px,0px ${innerHeight}px)`,
+          width: "100%",
+          height: "100%",
+        }}
         onMouseMove={(e) => {
           if (portalArray[portalIndex] || refIndex == 4) return null;
           // //calculating progress
@@ -465,7 +487,7 @@ export default function Hero() {
           className="absolute top-10 left-10 z-3 font-robert-medium text-primary"
         >
           <h1
-            className="w-[fit-content] text-primary font-zentry text-center text-[11rem] uppercase cursor-default"
+            className="w-[fit-content] text-primary font-zentry text-center text-[11rem] uppercase origin-center cursor-default"
             ref={titleRef}
           >
             redefine
@@ -484,7 +506,10 @@ export default function Hero() {
             </Button>
           </div>
         </div>
-        <div id="slides" className="absolute inset-0">
+        <div
+          id="slides"
+          className="absolute inset-0 w-full h-full overflow-x-hidden"
+        >
           <VideoPortal
             portalRef1={portalRef1}
             funcs={[clearTimerPortal]}
@@ -566,22 +591,38 @@ export default function Hero() {
         </div>
         <div
           id="portal-titles"
-          className=" absolute top-[65%] right-10 z-3 w-[fit-content] text-primary font-zentry text-center text-[10rem] uppercase origin center cursor-default"
+          className=" absolute top-[65%] right-10 z-3 w-max text-primary font-zentry text-center text-[10rem] uppercase origin-center cursor-default"
         >
-          <h2 id="portal-title-1" className="invisible" ref={portalTitleRef1}>
+          <h2
+            id="portal-title-1"
+            className="invisible origin-center"
+            ref={portalTitleRef1}
+          >
             gaming
           </h2>
-          <h2 id="portal-title-2" className="invisible" ref={portalTitleRef2}>
+          <h2
+            id="portal-title-2"
+            className="invisible origin-center"
+            ref={portalTitleRef2}
+          >
             identity
           </h2>
-          <h2 id="portal-title-3" className="invisible" ref={portalTitleRef3}>
+          <h2
+            id="portal-title-3"
+            className="invisible origin-center"
+            ref={portalTitleRef3}
+          >
             reality
           </h2>
-          <h2 id="portal-title-4" className="invisible" ref={portalTitleRef4}>
-            agentic
+          <h2
+            id="portal-title-4"
+            className="invisible origin-center"
+            ref={portalTitleRef4}
+          >
+            agentic ai
           </h2>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
