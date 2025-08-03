@@ -59,6 +59,7 @@ export default function rotatationTextAnimation(
         rotationY: 0,
         y: 0,
         x: 0,
+        width: "577px",
       },
       ">"
     );

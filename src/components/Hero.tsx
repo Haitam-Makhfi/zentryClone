@@ -267,11 +267,11 @@ export default function Hero() {
   return (
     <section
       id="hero-wraper"
-      className="absolute inset-0 w-screen h-screen overflow-hidden m-0 p-0"
+      className="absolute inset-0 w-screen h-screen overflow-hidden"
     >
       <div
         id="hero"
-        className="absolute inset-0 overflow-hidden w-full h-full"
+        className="absolute inset-0 overflow-hidden"
         ref={heroRef}
         style={{
           clipPath: `polygon(0px 0px,${innerWidth}px 0px,${innerWidth}px ${innerHeight}px,0px ${innerHeight}px)`,
