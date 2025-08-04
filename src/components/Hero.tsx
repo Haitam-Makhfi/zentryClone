@@ -623,6 +623,15 @@ export default function Hero() {
           </h2>
         </div>
       </div>
+      <div
+        id="portal-titles"
+        className=" absolute top-[65%] right-10 w-max text-black font-zentry text-center text-[10rem] uppercase origin-center cursor-default -z-1"
+      >
+        <h2 className="origin-center">gaming</h2>
+        <h2 className="origin-center">identity</h2>
+        <h2 className="origin-center">reality</h2>
+        <h2 className="origin-center">agentic ai</h2>
+      </div>
     </section>
   );
 }
