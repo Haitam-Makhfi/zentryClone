@@ -201,7 +201,7 @@ export default function Hero() {
         innerWidth / 2 + innerWidth * 0.2
       }px 0px,${innerWidth - innerWidth * 0.15}px ${
         innerHeight - innerHeight * 0.15
-      }px,${innerWidth * 0.2}px ${innerHeight - innerHeight * 0.25}px)`,
+      }px,${innerWidth * 0.1}px ${innerHeight - innerHeight * 0.25}px)`,
     });
   });
   // Arrays
@@ -267,7 +267,7 @@ export default function Hero() {
   return (
     <section
       id="hero-wraper"
-      className="absolute inset-0 w-screen h-screen overflow-hidden"
+      className="relative inset-0 w-screen h-screen overflow-hidden"
     >
       <div
         id="hero"
