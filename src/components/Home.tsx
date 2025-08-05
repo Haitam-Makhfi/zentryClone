@@ -16,7 +16,24 @@ export default function Home() {
   const { contextSafe } = useGSAP();
   const handleMouseMove = contextSafe(
     (dx: number, dy: number, maxOffset: number) => {
-      gsap.to("#welcom-section");
+      const topLeftX = innerWidth / 2 - innerWidth * 0.1 + dx * maxOffset * 3;
+      const topLeftY = innerHeight * 0.15 + dy * maxOffset;
+
+      const topRightX = innerWidth / 2 + innerWidth * 0.09 + dx * maxOffset;
+      const topRightY = innerHeight * 0.2 + dy * maxOffset;
+
+      const bottomRightX = innerWidth / 2 + innerWidth * 0.13 + dx * maxOffset;
+      const bottomRightY = innerHeight - innerHeight * 0.17 + dy * maxOffset;
+
+      const bottomLeftX =
+        innerWidth / 2 - innerWidth * 0.09 + dx * maxOffset * 3;
+      const bottomLeftY = innerHeight - innerHeight * 0.15 + dy * maxOffset;
+
+      gsap.to("#welcom-portal", {
+        clipPath: `polygon(${topLeftX}px ${topLeftY}px,${topRightX}px ${topRightY}px,${bottomRightX}px ${bottomRightY}px,${bottomLeftX}px ${bottomLeftY}px)`,
+      });
+      //   gsap.to("#welcom-portal", {
+      // });
     }
   );
   return (
@@ -50,7 +67,8 @@ export default function Home() {
           </h3>
           <div className="welcom-imgs">
             <img
-              className="absolute"
+              id="welcom-portal"
+              className="absolute -z-1"
               src={aboutImg}
               alt="welcom picture"
               style={{
@@ -65,7 +83,11 @@ export default function Home() {
                 }px )`,
               }}
             />
-            <img src={stonesImg} alt="picture of couple of stones" />
+            <img
+              src={stonesImg}
+              id="#stones"
+              alt="picture of couple of stones"
+            />
           </div>
         </section>
       </main>
