@@ -6,14 +6,37 @@ import aboutImg from "../imgs/about.webp";
 import stonesImg from "../imgs/stones.webp";
 import Hero from "./Hero";
 import Nav from "./Nav";
+import { useRef } from "react";
 //GSAP PLUGINS
 gsap.registerPlugin(GSDevTools);
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
+//   GSDevTools.create();
 export default function Home() {
-  //   GSDevTools.create();
-  const { innerWidth, innerHeight } = window;
+  const leaderRef = useRef<HTMLDivElement | null>(null);
+  useGSAP(() => {
+    if (!leaderRef.current) return null;
+    const bound = leaderRef.current.getBoundingClientRect();
+    console.log(bound.left, bound.top);
+    const x = Math.floor(30 + bound.left + window.scrollX);
+    const y = Math.floor(30 + bound.top + window.scrollY);
+
+    gsap.set("#leader", {
+      clipPath: `circle(5px at ${x - bound.width}px ${y - bound.height}px)`,
+    });
+  });
   const { contextSafe } = useGSAP();
+  const { innerWidth, innerHeight } = window;
+  const getPoint = contextSafe((dx: number, dy: number): void | null => {
+    // if (!leaderRef.current) return null;
+    // const bound = leaderRef.current.getBoundingClientRect();
+    // const x = Math.floor(dx + bound.left);
+    // const y = Math.floor(dy + bound.top);
+    // console.log(x, y);
+    // gsap.set(leaderRef.current, {
+    //   clipPath: `circle(5px at ${x}px ${y}px)`,
+    // });
+  });
   const handleMouseMove = contextSafe(
     (dx: number, dy: number, maxOffset: number) => {
       const topLeftX = innerWidth / 2 - innerWidth * 0.1 + dx * maxOffset * 3;
@@ -32,8 +55,6 @@ export default function Home() {
       gsap.to("#welcom-portal", {
         clipPath: `polygon(${topLeftX}px ${topLeftY}px,${topRightX}px ${topRightY}px,${bottomRightX}px ${bottomRightY}px,${bottomLeftX}px ${bottomLeftY}px)`,
       });
-      //   gsap.to("#welcom-portal", {
-      // });
     }
   );
   return (
@@ -65,7 +86,14 @@ export default function Home() {
           <h3 className="font-zentry text-8xl mt-10 w-[22ch]">
             Discover the world's largest shared adventure
           </h3>
-          <div className="welcom-imgs">
+          <div className="welcom-imgs" ref={leaderRef}>
+            <div
+              id="leader"
+              className="w-80 h-100 bg-black m-auto mt-10"
+              onMouseMove={() => {
+                getPoint(100, 100);
+              }}
+            ></div>
             <img
               id="welcom-portal"
               className="absolute -z-1"
@@ -80,7 +108,7 @@ export default function Home() {
                   innerHeight - innerHeight * 0.17
                 }px,${innerWidth / 2 - innerWidth * 0.09}px ${
                   innerHeight - innerHeight * 0.15
-                }px )`,
+                }px)`,
               }}
             />
             <img
