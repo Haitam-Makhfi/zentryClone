@@ -34,7 +34,7 @@ export default function Nav() {
     });
     gsap.to("#right-nav-bg", {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.2,
     });
   });
   return (

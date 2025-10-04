@@ -4,8 +4,13 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import aboutImg from "../imgs/about.webp";
 import stonesImg from "../imgs/stones.webp";
+import feature1 from "../videos/feature-1.mp4";
+import feature2 from "../videos/feature-2.mp4";
+import feature3 from "../videos/feature-3.mp4";
+import feature4 from "../videos/feature-4.mp4";
 import Hero from "./Hero";
 import Nav from "./Nav";
+import ThreeDCard from "./ThreeDCard";
 import { useRef } from "react";
 //GSAP PLUGINS
 gsap.registerPlugin(GSDevTools);
@@ -20,15 +25,6 @@ export default function Home() {
   const stonesRef = useRef<HTMLDivElement | null>(null);
   // const { contextSafe } = useGSAP();
   useGSAP(() => {
-    ScrollTrigger.create({
-      // trigger: "#welcom-imgs",
-      // start: "top top",
-      // end: `${window.innerHeight * 2} bottom`,
-      // scrub: true,
-      // pin: true,
-      // // pinSpacing: false,
-      // markers: true,
-    });
     gsap
       .timeline({
         scrollTrigger: {
@@ -53,117 +49,6 @@ export default function Home() {
       });
   });
   const { innerWidth, innerHeight } = window;
-
-  // const handleMouseMove = contextSafe(
-  //   (dx: number, dy: number, maxOffset: number) => {
-  //     let topLeftX: number = 0;
-  //     let topLeftY: number = 0;
-  //     let topRightX: number = 0;
-  //     let topRightY: number = 0;
-  //     let bottomRightX: number = 0;
-  //     let bottomRightY: number = 0;
-  //     let bottomLeftX: number = 0;
-  //     let bottomLeftY: number = 0;
-
-  //     if (dx > 0.2 && dy < 0.2 && dy > -0.2) {
-  //       //right
-  //       topLeftX = innerWidth / 2 - innerWidth * 0.1 + dx * maxOffset * 3;
-  //       topLeftY = innerHeight * 0.15 + dy * maxOffset;
-
-  //       topRightX = innerWidth / 2 + innerWidth * 0.09 + dx * maxOffset;
-  //       topRightY = innerHeight * 0.2 + dy * maxOffset;
-
-  //       bottomRightX = innerWidth / 2 + innerWidth * 0.13 + dx * maxOffset;
-  //       bottomRightY = innerHeight - innerHeight * 0.17 + dy * maxOffset;
-
-  //       bottomLeftX = innerWidth / 2 - innerWidth * 0.09 + dx * maxOffset * 3;
-  //       bottomLeftY = innerHeight - innerHeight * 0.15 + dy * maxOffset;
-  //     } else if (dx < -0.2 && dy < 0.2 && dy > -0.2) {
-  //       //left
-  //       topLeftX = innerWidth / 2 - innerWidth * 0.13 + dx * maxOffset;
-  //       topLeftY = innerHeight / 2 - innerHeight * 0.17 + dy * maxOffset;
-
-  //       topRightX = innerWidth / 2 + innerWidth * 0.1 + dx * maxOffset;
-  //       topRightY = innerHeight / 2 - innerHeight * 0.15 + dy * maxOffset;
-
-  //       bottomRightX = innerWidth / 2 + innerWidth * 0.13 + dx * maxOffset;
-  //       bottomRightY = innerHeight / 2 + innerHeight * 0.14 + dy * maxOffset;
-
-  //       bottomLeftX = innerWidth / 2 - innerWidth * 0.12 + dx * maxOffset;
-  //       bottomLeftY = innerHeight / 2 + innerHeight * 0.17 + dy * maxOffset;
-  //     }
-  //     if (dy > 0 && dx < 0.2 && dx > -0.2) {
-  //       //bottom
-  //       // topLeftX = innerWidth / 2 - 75 + dx * maxOffset;
-  //       // topLeftY = innerHeight / 2 - 75 + dy * maxOffset * 2;
-  //       // topRightX = innerWidth / 2 - 75 + width + dx * maxOffset;
-  //       // topRightY = innerHeight / 2 - 75 + dy * maxOffset * 2;
-  //       // bottomRightX = innerWidth / 2 - 75 + width - 5 + dx * maxOffset;
-  //       // bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset;
-  //       // bottomLeftX = innerWidth / 2 - 75 + 5 + dx * maxOffset;
-  //       // bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset;
-  //     } else if (dy < 0) {
-  //       //top
-  //       topLeftX = innerWidth / 2 - innerWidth * 0.115 + dx * maxOffset;
-  //       topLeftY = innerHeight * 0.15 + dy * maxOffset;
-
-  //       topRightX = innerWidth / 2 + innerWidth * 0.08 + dx * maxOffset;
-  //       topRightY = innerHeight * 0.22 + dy * maxOffset;
-
-  //       bottomRightX = innerWidth / 2 + innerWidth * 0.115 + dx * maxOffset;
-  //       bottomRightY = innerHeight - innerHeight * 0.17 + dy * maxOffset;
-
-  //       bottomLeftX = innerWidth / 2 - innerWidth * 0.12 + dx * maxOffset;
-  //       bottomLeftY = innerHeight - innerHeight * 0.2 + dy * maxOffset;
-  //     }
-  //     if (dy < -0.2 && dx > 0.2) {
-  //       //top right
-  //       // topLeftX = innerWidth / 2 - 10 + dx * maxOffset * 2;
-  //       // topLeftY = innerHeight / 2 - 75 + 15 + dy * maxOffset * 2;
-  //       // topRightX = innerWidth / 2 + width - 5 + dx * maxOffset;
-  //       // topRightY = innerHeight / 2 - 75 + dy * maxOffset;
-  //       // bottomRightX = innerWidth / 2 + width + 10 + dx * maxOffset;
-  //       // bottomRightY = innerHeight / 2 - 75 + height - 15 + dy * maxOffset;
-  //       // bottomLeftX = innerWidth / 2 + dx * maxOffset * 2;
-  //       // bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset * 2;
-  //     } else if (dy < -0.2 && dx < -0.2) {
-  //       //top left
-  //       // topLeftX = innerWidth / 2 - 75 + 5 + dx * maxOffset;
-  //       // topLeftY = innerHeight / 2 - 75 + dy * maxOffset;
-  //       // topRightX = innerWidth / 2 - 75 + width + 10 + dx * maxOffset * 2;
-  //       // topRightY = innerHeight / 2 - 75 + 15 + dy * maxOffset * 2;
-  //       // bottomRightX = innerWidth / 2 - 75 + width + dx * maxOffset * 2;
-  //       // bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset * 2;
-  //       // bottomLeftX = innerWidth / 2 - 75 - 10 + dx * maxOffset;
-  //       // bottomLeftY = innerHeight / 2 - 75 + height - 15 + dy * maxOffset;
-  //     } else if (dy > 0.2 && dx > 0.2) {
-  //       //bottom right
-  //       // topLeftX = innerWidth / 2 + 5 + dx * maxOffset * 2;
-  //       // topLeftY = innerHeight / 2 - 75 + dy * maxOffset * 2;
-  //       // topRightX = innerWidth / 2 + width + 10 + dx * maxOffset;
-  //       // topRightY = innerHeight / 2 - 75 + 15 + dy * maxOffset;
-  //       // bottomRightX = innerWidth / 2 + width + dx * maxOffset;
-  //       // bottomRightY = innerHeight / 2 - 75 + height + dy * maxOffset;
-  //       // bottomLeftX = innerWidth / 2 - 10 + dx * maxOffset * 2;
-  //       // bottomLeftY = innerHeight / 2 - 75 + height - 15 + dy * maxOffset * 2;
-  //     } else if (dy > 0.2 && dx < -0.2) {
-  //       //bottom left
-  //       // topLeftX = innerWidth / 2 - 75 - 10 + dx * maxOffset;
-  //       // topLeftY = innerHeight / 2 - 75 + 15 + dy * maxOffset;
-  //       // topRightX = innerWidth / 2 - 75 + width - 5 + dx * maxOffset * 2;
-  //       // topRightY = innerHeight / 2 - 75 + dy * maxOffset * 2;
-  //       // bottomRightX = innerWidth / 2 - 75 + width + 10 + dx * maxOffset * 2;
-  //       // bottomRightY = innerHeight / 2 - 75 + height - 15 + dy * maxOffset * 2;
-  //       // bottomLeftX = innerWidth / 2 - 75 + dx * maxOffset;
-  //       // bottomLeftY = innerHeight / 2 - 75 + height + dy * maxOffset;
-  //     }
-  //     gsap.to("#welcom-portal", {
-  //       clipPath: `polygon(${topLeftX}px ${topLeftY}px,${topRightX}px ${topRightY}px,${bottomRightX}px ${bottomRightY}px,${bottomLeftX}px ${bottomLeftY}px)`,
-  //       duration: 1,
-  //       ease: "none",
-  //     });
-  //   }
-  // );
   return (
     <>
       <Nav />
@@ -254,10 +139,10 @@ export default function Home() {
             civilization-scale intiligence, all while rewarding you
           </p>
         </section>
-        <section id="bento-grid" className="bg-black w-full h-screen mt-140">
+        <section id="bento-grid" className="bg-black w-full mt-140">
           <div
             id="bento-grid-text"
-            className="text-white w-[40ch] font-robert-medium mx-30 py-30"
+            className="text-white w-[40ch] font-robert-medium mx-35 py-30"
           >
             <b className="capitalize">intro to the metagame layer</b>
             <p className="normal-case text-gray-400">
@@ -266,7 +151,27 @@ export default function Home() {
               experience on your world.
             </p>
           </div>
-          <div id="bento-grid-elements"></div>
+          <div
+            id="bento-grid-elements"
+            className="w-[80%] grid grid-cols-2  grid-rows-[1fr 1fr 1fr 1fr] mx-auto pb-30 gap-3"
+          >
+            <ThreeDCard
+              src={feature1}
+              className="col-span-2 text-white relative border border-gray-600 rounded-lg"
+            ></ThreeDCard>
+            <ThreeDCard
+              src={feature2}
+              className="h-full row-span-2 text-white relative border border-gray-600 rounded-lg"
+            ></ThreeDCard>
+            <ThreeDCard
+              src={feature3}
+              className="h-[380px] overflow-hidden text-white relative border border-gray-600 rounded-lg"
+            ></ThreeDCard>
+            <ThreeDCard
+              src={feature4}
+              className="h-[380px] overflow-hidden text-white relative border border-gray-600 rounded-lg"
+            ></ThreeDCard>
+          </div>
         </section>
       </main>
     </>
