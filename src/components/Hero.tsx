@@ -456,7 +456,7 @@ export default function Hero() {
           });
           tl.to(refArray[refIndex].current, {
             "clip-path": newPath,
-            duration: 0.4,
+            duration: 0.3,
             ease: "none",
           });
           /// Mouse still logic
@@ -472,7 +472,7 @@ export default function Hero() {
               } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
                 innerHeight / 2 + 1
               } Z")`,
-              duration: 0.4,
+              duration: 0.3,
               ease: "none",
             });
             tl2.set(refArray[refIndex].current, {

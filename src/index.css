@@ -2,9 +2,11 @@
 @import "tailwindcss";
 body {
   box-sizing: border-box;
-  min-height: 200vh;
+  /* min-height: 500vh; */
   background-color: #dfdff0;
   overflow-x: hidden;
+  position: relative;
+  /* width: 100vw; */
 }
 h1 div {
   opacity: 0;
@@ -50,6 +52,7 @@ h1 div {
 }
 @theme {
   --font-zentry: "zentry", sans-serif;
+  --font-cir: "circular-web", sans-serif;
   --font-general: "general", sans-serif;
   --font-robert-medium: "robert-medium", sans-serif;
   --font-robert-regular: "robert-regular", sans-serif;
