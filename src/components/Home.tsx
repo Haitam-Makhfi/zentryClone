@@ -158,19 +158,64 @@ export default function Home() {
             <ThreeDCard
               src={feature1}
               className="col-span-2 text-white relative border border-gray-600 rounded-lg"
-            ></ThreeDCard>
+            >
+              <div className="content absolute top-5 left-10">
+                <h3 className="uppercase text-7xl font-zentry">radiant</h3>
+                <p className="w-[30ch] mt-5 text-lg font-robert-regular ">
+                  a cross-platform metagame app, turning your activities across
+                  web2 and web3 games into a rewarding adventure.
+                </p>
+              </div>
+              <button className="absolute bg-black bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl">
+                coming soon
+              </button>
+            </ThreeDCard>
             <ThreeDCard
               src={feature2}
               className="h-full row-span-2 text-white relative border border-gray-600 rounded-lg"
-            ></ThreeDCard>
+            >
+              <div className="content absolute top-5 left-10">
+                <h3 className="uppercase text-7xl font-zentry">zigma</h3>
+                <p className="w-[30ch] mt-5 text-lg font-robert-regular ">
+                  a cross-platform metagame app, turning your activities across
+                  web2 and web3 games into a rewarding adventure.
+                </p>
+              </div>
+              <button className="absolute bg-black bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl">
+                coming soon
+              </button>
+            </ThreeDCard>
             <ThreeDCard
               src={feature3}
               className="h-[380px] overflow-hidden text-white relative border border-gray-600 rounded-lg"
-            ></ThreeDCard>
+            >
+              {" "}
+              <div className="content absolute top-5 left-10">
+                <h3 className="uppercase text-7xl font-zentry">nexus</h3>
+                <p className="w-[30ch] mt-5 text-md font-robert-regular ">
+                  a gamifiedd social hub, adding a new dimention of play to
+                  social interaction for web3 communities.
+                </p>
+              </div>
+              <button className="absolute bg-black bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl">
+                coming soon
+              </button>
+            </ThreeDCard>
             <ThreeDCard
               src={feature4}
               className="h-[380px] overflow-hidden text-white relative border border-gray-600 rounded-lg"
-            ></ThreeDCard>
+            >
+              <div className="content absolute top-5 left-10">
+                <h3 className="uppercase text-7xl font-zentry">azul</h3>
+                <p className="w-[30ch] mt-5 text-lg font-robert-regular ">
+                  a cross-world ai agent that elevates your gameplay to be more
+                  fun and productive.
+                </p>
+              </div>
+              <button className="absolute bg-black bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl">
+                coming soon
+              </button>
+            </ThreeDCard>
           </div>
         </section>
       </main>
