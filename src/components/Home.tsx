@@ -12,6 +12,7 @@ import Hero from "./Hero";
 import Nav from "./Nav";
 import ThreeDCard from "./ThreeDCard";
 import BentoButton from "./BentoButton";
+import Scroller from "./Scroller";
 import { useRef } from "react";
 //GSAP PLUGINS
 gsap.registerPlugin(GSDevTools);
@@ -210,6 +211,7 @@ export default function Home() {
             </ThreeDCard>
           </div>
         </section>
+        <Scroller />
       </main>
     </>
   );

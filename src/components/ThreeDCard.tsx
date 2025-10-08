@@ -1,15 +1,47 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 import { useRef, type PropsWithChildren, type MouseEvent } from "react";
 interface ThreeDCardProps {
   src?: string;
   className?: string;
 }
 gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 export default function ThreeDCard(props: PropsWithChildren<ThreeDCardProps>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { src, className } = props;
   const { contextSafe } = useGSAP();
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    // Set initial perspective on the container
+    gsap.set(containerRef.current, {
+      perspective: 500,
+      transformStyle: "preserve-3d",
+    });
+
+    gsap.fromTo(
+      containerRef.current,
+      {
+        opacity: 0,
+        y: 100,
+        rotateX: -60,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom-=100",
+          end: "top center",
+        },
+      }
+    );
+  });
   const handleMouseMove = contextSafe((e: MouseEvent) => {
     const bound = containerRef.current
       ? containerRef.current.getBoundingClientRect()
@@ -26,7 +58,7 @@ export default function ThreeDCard(props: PropsWithChildren<ThreeDCardProps>) {
       scale: 0.97,
       x: dx,
       y: dy,
-      rotateX: dy * maxOffset,
+      rotateX: -dy * maxOffset,
       rotateY: dx * maxOffset,
       ease: "power2.out",
     });

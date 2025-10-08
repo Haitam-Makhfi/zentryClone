@@ -3,19 +3,12 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 export default function BentoButton(props: { children: React.ReactNode }) {
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
   const { contextSafe } = useGSAP();
-  useGSAP(() => {
-    // Set initial state
-    if (buttonRef.current) {
-      gsap.set(buttonRef.current, {
-        background: "black",
-      });
-    }
-  }, []);
 
   const handleMouseMove = contextSafe((e: React.MouseEvent) => {
-    const bound = buttonRef.current?.getBoundingClientRect();
+    const bound =
+      buttonRef.current && buttonRef.current.getBoundingClientRect();
     if (!bound) return null;
     const mouseX = e.clientX - bound.left;
     const mouseY = e.clientY - bound.top;
@@ -34,13 +27,13 @@ export default function BentoButton(props: { children: React.ReactNode }) {
     });
   });
   return (
-    <button
+    <div
       ref={buttonRef}
-      className="absolute bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl cursor-pointer transition-colors duration-300 bg-black"
+      className="absolute bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl cursor-pointer bg-black"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       {props.children}
-    </button>
+    </div>
   );
 }

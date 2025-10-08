@@ -2,7 +2,7 @@
 @import "tailwindcss";
 body {
   box-sizing: border-box;
-  /* min-height: 500vh; */
+  height: 100%;
   background-color: #dfdff0;
   overflow-x: hidden;
   position: relative;
