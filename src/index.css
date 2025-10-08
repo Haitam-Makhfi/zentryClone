@@ -18,6 +18,14 @@ h1 div {
   will-change: transform;
   transform-style: preserve-3d;
 }
+.gradient-hover {
+  background: radial-gradient(
+    circle at center,
+    rgba(202, 149, 255, 1),
+    transparent 60%
+  );
+  transition: background 0.1s ease;
+}
 @font-face {
   font-family: "circular-web";
   src: url("/fonts/circularweb-book.woff2") format("woff2");
