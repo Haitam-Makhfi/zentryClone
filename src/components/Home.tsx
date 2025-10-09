@@ -13,6 +13,7 @@ import Nav from "./Nav";
 import ThreeDCard from "./ThreeDCard";
 import BentoButton from "./BentoButton";
 import Scroller from "./Scroller";
+import Cta from "./Cta";
 import { useRef } from "react";
 //GSAP PLUGINS
 gsap.registerPlugin(GSDevTools);
@@ -35,8 +36,6 @@ export default function Home() {
           end: `${window.innerHeight * 2} bottom`,
           scrub: 1,
           pin: true,
-          // pinSpacing: false,
-          // markers: true,
         },
       })
       .to("#welcom-portal", {
@@ -55,9 +54,9 @@ export default function Home() {
     <>
       <Nav />
       <Hero />
-      <main>
+      <main className="w-full">
         <section
-          className="relative w-screen mt-30 text-center flex flex-col items-center"
+          className="relative w-full mt-30 text-center flex flex-col items-center"
           id="welcom-section"
           ref={containerRef}
           onMouseMove={() => {
@@ -108,7 +107,7 @@ export default function Home() {
             {/* </div> */}
             <img
               id="welcom-portal"
-              className="z-0"
+              className="z-0 w-"
               src={aboutImg}
               alt="welcom picture"
               style={{
@@ -141,7 +140,7 @@ export default function Home() {
             civilization-scale intiligence, all while rewarding you
           </p>
         </section>
-        <section id="bento-grid" className="bg-black w-full mt-140">
+        <section id="bento-grid" className="bg-black w-auto mt-140">
           <div
             id="bento-grid-text"
             className="text-white w-[40ch] font-robert-medium mx-35 py-30"
@@ -155,7 +154,7 @@ export default function Home() {
           </div>
           <div
             id="bento-grid-elements"
-            className="w-[80%] grid grid-cols-2  grid-rows-[1fr 1fr 1fr 1fr] mx-auto pb-30 gap-3"
+            className="w-[80%] grid grid-cols-2 grid-rows-[1fr 1fr 1fr 1fr] mx-auto pb-30 gap-3"
           >
             <ThreeDCard
               src={feature1}
@@ -212,6 +211,7 @@ export default function Home() {
           </div>
         </section>
         <Scroller />
+        <Cta />
       </main>
     </>
   );

@@ -7,7 +7,7 @@ import { useGSAP } from "@gsap/react";
 interface ButtonProps extends HTMLAttributes<HTMLDivElement> {
   width?: number;
   textColor?: "white" | "black" | "yellow";
-  bgColor?: "primary" | "black" | "yellow" | "transparent";
+  bgColor?: "primary" | "black" | "yellow" | "transparent" | "white";
 }
 export default function Button({
   width = 120,
@@ -29,6 +29,7 @@ export default function Button({
     primary: "fill-[#dfdff0]",
     yellow: "fill-yellow-200",
     transparent: "fill-transparent",
+    white: "fill-white",
   };
   let start = width / 3.8;
   let end = width - start;

@@ -30,7 +30,7 @@ export default function Scroller() {
           start: "top top",
           end: "+=700px",
           // markers: true,
-          toggleActions: "restart none none reverse",
+          toggleActions: "restart reverse none reverse",
         },
       });
       tl.to("#mvmAndToggle1", {
@@ -42,7 +42,7 @@ export default function Scroller() {
           fontSize: "16px",
           fontWeight: "600",
           ease: "none",
-          duration: 0.2,
+          duration: 0,
         },
         "<"
       );
@@ -65,7 +65,7 @@ export default function Scroller() {
           start: "top top",
           end: "+=700px",
           scrub: 2,
-          toggleActions: "restart none none reverse",
+          toggleActions: "restart reverse none reverse",
         },
         scaleY: 1,
         duration: 1,
@@ -96,7 +96,7 @@ export default function Scroller() {
             fontSize: "16px",
             fontWeight: "600",
             ease: "none",
-            duration: 0.2,
+            duration: 0,
           },
           "<"
         )
@@ -151,7 +151,7 @@ export default function Scroller() {
             fontSize: "9px",
             fontWeight: "400",
             ease: "none",
-            duration: 0.2,
+            duration: 0,
           },
           "<"
         );
