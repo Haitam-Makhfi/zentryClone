@@ -30,7 +30,7 @@ export default function Scroller() {
           start: "top top",
           end: "+=700px",
           // markers: true,
-          toggleActions: "restart reverse none reverse",
+          toggleActions: "restart none none reverse",
         },
       });
       tl.to("#mvmAndToggle1", {
@@ -65,7 +65,7 @@ export default function Scroller() {
           start: "top top",
           end: "+=700px",
           scrub: 2,
-          toggleActions: "restart reverse none reverse",
+          toggleActions: "restart none none reverse",
         },
         scaleY: 1,
         duration: 1,

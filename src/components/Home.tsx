@@ -212,7 +212,7 @@ export default function Home() {
         <Scroller />
         <Cta />
       </main>
-      <footer className="w-full h-20 px-20 bg-[#261D80] font-general text-white text-xs flex items-center justify-between gap-3">
+      <footer className="w-full h-20 px-20 font-general text-black text-xs flex items-center justify-between gap-3">
         <p className="capitalize">@Nova 2024, all rights reserved</p>
         <div className="flex items-center justify-center gap-7">
           <button
@@ -227,7 +227,7 @@ export default function Home() {
             }}
           >
             <svg
-              className="w-7 fill-white"
+              className="w-7 fill-black"
               ref={svg1Ref}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 640"
@@ -247,7 +247,7 @@ export default function Home() {
             }}
           >
             <svg
-              className="w-7 fill-white"
+              className="w-7 fill-black"
               ref={svg2Ref}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 640"
@@ -267,7 +267,7 @@ export default function Home() {
             }}
           >
             <svg
-              className="w-7 fill-white"
+              className="w-7 fill-black"
               ref={svg3Ref}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 640"

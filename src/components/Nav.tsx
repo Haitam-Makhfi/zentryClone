@@ -1,12 +1,50 @@
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
 import gsap from "gsap";
 import logo from "../imgs/logo.png";
 import Button from "./Button";
 export default function Nav() {
   const navRef = useRef<HTMLDivElement>(null);
   const [target, setTarget] = useState<HTMLElement | null>(null);
-  const { contextSafe } = useGSAP({ scope: navRef && navRef });
+  let lastScroll = 0;
+  // console.log("scroll triger created");
+  useGSAP(() => {
+    ScrollTrigger.create({
+      onUpdate: (self) => {
+        if (!navRef.current) return null;
+        const current = self.scroll();
+        if (Math.abs(current - lastScroll) > 30) {
+          if (self.direction === 1) {
+            //down
+            gsap.to(navRef.current, {
+              y: "-150%",
+              backgroundColor: "black",
+            });
+          } else {
+            //up
+            gsap.to(navRef.current, {
+              y: 0,
+            });
+          }
+          lastScroll = current;
+        }
+      },
+    });
+    ScrollTrigger.create({
+      trigger: "body", // or your top element
+      start: "top top", // when the top of body hits the top of viewport
+      end: "+=20px",
+      onEnterBack: () => {
+        gsap.to(navRef.current, {
+          backgroundColor: "transparent",
+          duration: 0.3,
+        });
+      },
+    });
+  }, []);
+
+  const { contextSafe } = useGSAP({ scope: navRef });
   const mouseEnter = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
     if (!e.currentTarget) return null;
     let childBound = e.currentTarget.getBoundingClientRect();
@@ -39,7 +77,7 @@ export default function Nav() {
   });
   return (
     <nav
-      className=" font-general text-[10px] text-white uppercase flex w-full justify-between pr-10 mt-2 font-bold fixed z-10 "
+      className=" font-general text-[10px] text-white uppercase flex w-[95%] justify-between mt-2 font-bold fixed z-10 justify-self-center rounded-lg"
       ref={navRef}
     >
       <div id="left-nav" className="flex items-center gap-2 text-black">
