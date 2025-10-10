@@ -73,6 +73,9 @@ h1 div {
   section {
     width: 100%;
   }
+  .shake {
+    animation: shake 0.5s;
+  }
 }
 @theme {
   --font-zentry: "zentry", sans-serif;
@@ -81,4 +84,16 @@ h1 div {
   --font-robert-medium: "robert-medium", sans-serif;
   --font-robert-regular: "robert-regular", sans-serif;
   --color-primary: #dfdff0;
+}
+@keyframes shake {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  30% {
+    rotate: 50deg;
+  }
+  60% {
+    rotate: -50deg;
+  }
 }

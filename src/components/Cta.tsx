@@ -29,14 +29,14 @@ export default function Cta() {
       <img
         src={swordsman}
         alt="an img of a swordsman"
-        className="w-90 absolute -right-10 top-10 z-1"
+        className="w-90 absolute -right-13 top-10 z-1"
         style={{
           clipPath: `polygon(10% 0,85% 13%,70% 100%,0 90%)`,
         }}
       />
       <img
         src={swordsmanPartial}
-        className="w-90 absolute -right-10 top-10 z-2"
+        className="w-90 absolute -right-13 top-10 z-2"
       />
       <p className="uppercase font-general text-center text-[9px]">
         join zentry
