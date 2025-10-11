@@ -30,11 +30,11 @@ export default function Hero() {
   const [payload, setPayLoad] = useState<[GSAPTimeline, SplitText] | []>([]);
 
   useGSAP(() => {
-    // const tl = gsap.timeline();
     titleRef.current && rotatationTextAnimation(titleRef.current, null, null);
-    // const el = document.getElementById("portal-titles")!
-    //   .firstChild as HTMLElement;
-    // rotatationTextAnimation(el);
+    gsap.set("#portal-titles2", {
+      delay: 0.3,
+      opacity: 1,
+    });
   });
   useEffect(() => {
     if (portalIndex == 4 || refIndex == 4) {
@@ -456,7 +456,7 @@ export default function Hero() {
           });
           tl.to(refArray[refIndex].current, {
             "clip-path": newPath,
-            duration: 0.3,
+            duration: 0.4,
             ease: "none",
           });
           /// Mouse still logic
@@ -472,7 +472,7 @@ export default function Hero() {
               } ${innerHeight / 2 + 1} L${innerWidth / 2 - 1} ${
                 innerHeight / 2 + 1
               } Z")`,
-              duration: 0.3,
+              duration: 0.4,
               ease: "none",
             });
             tl2.set(refArray[refIndex].current, {
@@ -624,8 +624,8 @@ export default function Hero() {
         </div>
       </div>
       <div
-        id="portal-titles"
-        className=" absolute top-[65%] right-10 w-max text-black font-zentry text-center text-[10rem] uppercase origin-center cursor-default -z-1"
+        id="portal-titles2"
+        className=" absolute top-[65%] right-10 w-max text-black font-zentry text-center text-[10rem] uppercase origin-center cursor-default -z-1 opacity-0"
       >
         <h2 className="origin-center">gaming</h2>
         <h2 className="origin-center">identity</h2>

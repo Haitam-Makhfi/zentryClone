@@ -58,29 +58,11 @@ export default function Home() {
           className="relative w-full mt-30 text-center flex flex-col items-center"
           id="welcom-section"
           ref={containerRef}
-          onMouseMove={() => {
-            const bound = document
-              .getElementById("welcom-section")
-              ?.getBoundingClientRect();
-            // const maxOffset = 30;
-            if (!bound) return null;
-            // const mouseX = e.clientX - bound.left;
-            // const mouseY = e.clientY - bound.top;
-            // const centerX = bound.width / 2;
-            // const centerY = bound.height / 2;
-            // const dx = (mouseX - centerX) / centerX;
-            // const dy = (mouseY - centerY) / centerY;
-            // handleMouseMove(dx, dy, maxOffset);
-            // getPoint(e, 30, 30);
-          }}
         >
           <p className="font-general text-[10px] uppercase bold">
             welcom to zentry
           </p>
-          <h3
-            className="font-zentry text-8xl mt-10 w-[22ch]"
-            // ref={prevEleRef}
-          >
+          <h3 className="font-zentry text-8xl mt-10 w-[22ch]">
             Discover the world's largest shared adventure
           </h3>
           <div
@@ -88,22 +70,6 @@ export default function Home() {
             ref={stonesRef}
             className="w-full relative -top-10"
           >
-            {/* <div
-              id="container"
-              ref={wrapperRef}
-              className="relative w-max m-auto"
-              onMouseMove={(e) => {}}
-            >
-              <div
-                id="leader"
-                ref={leaderRef}
-                className="w-80 h-100 bg-black m-auto mt-10 z-19"
-              ></div>
-              <div
-                className={`w-80 h-100 absolute top-0 left-1/2 -translate-x-1/2 bg-red-600 m-auto z-20`}
-                ref={clipPathRef}
-              ></div> */}
-            {/* </div> */}
             <img
               id="welcom-portal"
               className="z-0 w-"
