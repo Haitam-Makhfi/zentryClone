@@ -28,7 +28,7 @@ export default function Scroller() {
         scrollTrigger: {
           trigger: contanerRef.current,
           start: "top top",
-          end: "+=700px",
+          end: "+=900px",
           // markers: true,
           toggleActions: "restart none none reverse",
         },
@@ -36,34 +36,34 @@ export default function Scroller() {
       tl.to("#mvmAndToggle1", {
         y: -25,
         ease: "power3.out",
-      }).to(
-        "#mvmAndToggle1 h3",
-        {
-          fontSize: "16px",
-          fontWeight: "600",
-          ease: "none",
-          duration: 0,
-        },
-        "<"
-      );
-      gsap.to("#mvmAndOpacity1", {
-        scrollTrigger: {
-          trigger: contanerRef.current,
-          start: "top top",
-          end: "+=700px",
-          toggleActions: "restart none none reverse",
-        },
-        y: -20,
-        opacity: 1,
-        display: "flex",
-        duration: 0.4,
-        ease: "none",
-      });
+        // duration: 0.15,
+      })
+        .to(
+          "#mvmAndToggle1 h3",
+          {
+            fontSize: "16px",
+            fontWeight: "600",
+            ease: "none",
+            duration: 0.15,
+          },
+          "<"
+        )
+        .to(
+          "#mvmAndOpacity1",
+          {
+            y: -10,
+            opacity: 1,
+            display: "flex",
+            duration: 0.4,
+            ease: "none",
+          },
+          "<"
+        );
       gsap.to("#mvmAndOpacity1 .bar .progress", {
         scrollTrigger: {
           trigger: contanerRef.current,
           start: "top top",
-          end: "+=700px",
+          end: "+=900px",
           scrub: 2,
           toggleActions: "restart none none reverse",
         },
@@ -80,8 +80,8 @@ export default function Scroller() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: contanerRef.current,
-          start: "700px top",
-          end: "+=700px",
+          start: "900px top",
+          end: "+=900px",
           // markers: true,
           toggleActions: "restart none none reverse",
         },
@@ -96,7 +96,7 @@ export default function Scroller() {
             fontSize: "16px",
             fontWeight: "600",
             ease: "none",
-            duration: 0,
+            duration: 0.15,
           },
           "<"
         )
@@ -114,8 +114,8 @@ export default function Scroller() {
       gsap.to("#mvmAndOpacity2 .bar .progress", {
         scrollTrigger: {
           trigger: contanerRef.current,
-          start: "700px top",
-          end: "+=700px",
+          start: "900px top",
+          end: "+=900px",
           pinSpacing: false,
           scrub: 2,
           toggleActions: "restart none none reverse",
@@ -127,8 +127,8 @@ export default function Scroller() {
       const revTl = gsap.timeline({
         scrollTrigger: {
           trigger: contanerRef.current,
-          start: "700px top",
-          end: "+=700px",
+          start: "890px top",
+          end: "+=900px",
           // markers: true,
           toggleActions: "restart none none reverse",
         },
@@ -138,28 +138,32 @@ export default function Scroller() {
           y: 0,
           opacity: 0,
           display: "none",
-          duration: 0.1,
+          duration: 0.4,
           ease: "none",
         })
-        .to("#mvmAndToggle1", {
-          y: -20,
-          ease: "power3.out",
-        })
+        .to(
+          "#mvmAndToggle1",
+          {
+            y: -20,
+            ease: "power3.out",
+          },
+          "<"
+        )
         .to(
           "#mvmAndToggle1 h3",
           {
             fontSize: "9px",
             fontWeight: "400",
             ease: "none",
-            duration: 0,
+            duration: 0.15,
           },
           "<"
         );
       const tl2 = gsap.timeline({
         scrollTrigger: {
           trigger: contanerRef.current,
-          start: "1400px top",
-          end: "+=700px",
+          start: "1800px top",
+          end: "+=900px",
           // markers: true,
           toggleActions: "restart none none reverse",
         },
@@ -175,7 +179,7 @@ export default function Scroller() {
             fontSize: "16px",
             fontWeight: "600",
             ease: "none",
-            duration: 0.1,
+            duration: 0.15,
           },
           "<"
         )
@@ -193,8 +197,8 @@ export default function Scroller() {
       gsap.to("#mvmAndOpacity3 .bar .progress", {
         scrollTrigger: {
           trigger: contanerRef.current,
-          start: "1400px top",
-          end: "+=700px",
+          start: "1800px top",
+          end: "+=900px",
           pinSpacing: false,
           scrub: 2,
           toggleActions: "restart none none reverse",
@@ -206,8 +210,8 @@ export default function Scroller() {
       const revTl2 = gsap.timeline({
         scrollTrigger: {
           trigger: contanerRef.current,
-          start: "1400px top",
-          end: "+=700px",
+          start: "1790px top",
+          end: "+=900px",
           // markers: true,
           toggleActions: "restart none none reverse",
         },
@@ -217,20 +221,24 @@ export default function Scroller() {
           y: 0,
           opacity: 0,
           display: "none",
-          duration: 0.1,
+          duration: 0.4,
           ease: "none",
         })
-        .to("#mvmAndToggle2", {
-          y: -20,
-          ease: "power3.out",
-        })
+        .to(
+          "#mvmAndToggle2",
+          {
+            y: -20,
+            ease: "power3.out",
+          },
+          "<"
+        )
         .to(
           "#mvmAndToggle2 h3",
           {
             fontSize: "9px",
             fontWeight: "400",
             ease: "none",
-            duration: 0.1,
+            duration: 0.15,
           },
           "<"
         );
