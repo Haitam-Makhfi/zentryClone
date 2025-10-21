@@ -123,7 +123,7 @@ export default function Home() {
           >
             <ThreeDCard
               src={feature1}
-              className="cursor-pointer col-span-2 text-white relative border border-gray-600 rounded-lg"
+              className="cursor-pointer col-span-2 text-white relative border border-gray-600 rounded-lg overflow-hidden"
             >
               <div className="content absolute top-5 left-10">
                 <h3 className="uppercase text-7xl font-zentry">radiant</h3>
@@ -136,7 +136,7 @@ export default function Home() {
             </ThreeDCard>
             <ThreeDCard
               src={feature2}
-              className="cursor-pointer h-full row-span-2 text-white relative border border-gray-600 rounded-lg"
+              className="cursor-pointer h-full row-span-2 text-white relative border border-gray-600 rounded-lg overflow-hidden"
             >
               <div className="content absolute top-5 left-10">
                 <h3 className="uppercase text-7xl font-zentry">zigma</h3>

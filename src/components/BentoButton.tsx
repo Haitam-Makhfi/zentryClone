@@ -4,7 +4,9 @@ import { useGSAP } from "@gsap/react";
 
 export default function BentoButton(props: { children: React.ReactNode }) {
   const buttonRef = useRef<HTMLDivElement | null>(null);
-  const { contextSafe } = useGSAP();
+  const { contextSafe } = useGSAP(() => {
+    gsap.set(buttonRef.current, { background: "black" });
+  });
 
   const handleMouseMove = contextSafe((e: React.MouseEvent) => {
     const bound =
@@ -29,7 +31,7 @@ export default function BentoButton(props: { children: React.ReactNode }) {
   return (
     <div
       ref={buttonRef}
-      className="absolute bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl cursor-pointer bg-black"
+      className="absolute bottom-5 left-10 px-5 py-1 font-general text-gray-600 border border-gray-800 rounded-2xl cursor-pointer"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
