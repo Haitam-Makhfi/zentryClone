@@ -265,7 +265,7 @@ export default function Hero() {
     }
   };
   return (
-    <section
+    <header
       id="hero-wraper"
       className="relative inset-0 w-screen h-screen overflow-hidden"
     >
@@ -632,6 +632,6 @@ export default function Hero() {
         {refIndex === 3 && <h2 className="">reality</h2>}
         {refIndex === 0 && <h2 className="">agentic ai</h2>}
       </div>
-    </section>
+    </header>
   );
 }
