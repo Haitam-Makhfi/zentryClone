@@ -51,10 +51,10 @@ export default function Scroller() {
         .to(
           "#mvmAndOpacity1",
           {
-            y: -10,
+            y: -20,
             opacity: 1,
             display: "flex",
-            duration: 0.4,
+            duration: 0.1,
             ease: "none",
           },
           "<"
@@ -138,7 +138,7 @@ export default function Scroller() {
           y: 0,
           opacity: 0,
           display: "none",
-          duration: 0.4,
+          duration: 0.1,
           ease: "none",
         })
         .to(

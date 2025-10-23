@@ -625,12 +625,12 @@ export default function Hero() {
       </div>
       <div
         id="portal-titles2"
-        className=" absolute top-[65%] right-10 w-max text-black font-zentry text-center text-[10rem] uppercase origin-center cursor-default -z-1 opacity-0"
+        className=" absolute top-[65%] right-10 w-[577px] text-black font-zentry text-center text-[10rem] uppercase origin-center cursor-default -z-1 opacity-0"
       >
-        <h2 className="origin-center">gaming</h2>
-        <h2 className="origin-center">identity</h2>
-        <h2 className="origin-center">reality</h2>
-        <h2 className="origin-center">agentic ai</h2>
+        {refIndex === 1 && <h2 className="">gaming</h2>}
+        {refIndex === 2 && <h2 className="">identity</h2>}
+        {refIndex === 3 && <h2 className="">reality</h2>}
+        {refIndex === 0 && <h2 className="">agentic ai</h2>}
       </div>
     </section>
   );
